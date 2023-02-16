@@ -1,28 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    Vector2 InputVec;
+    public Vector2 InputVec;
     [SerializeField] float MoveSpeed;
     Rigidbody2D Rigid;
+    SpriteRenderer spriter;
+    Animator anim;
     // Start is called before the first frame update
     void Awake()
     {
         Rigid = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        InputVec.x = Input.GetAxis("Horizontal");
-        InputVec.y = Input.GetAxis("Vertical");
-    }
+        spriter = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+    } 
 
     void FixedUpdate()
     {
-        Vector2 NextVec = InputVec.normalized * MoveSpeed * Time.fixedDeltaTime;
+        Vector2 NextVec = InputVec * MoveSpeed * Time.fixedDeltaTime;
         Rigid.MovePosition(Rigid.position + NextVec);
+    }
+    void LateUpdate()
+    {
+        anim.SetFloat("Speed",InputVec.magnitude);
+
+        if(InputVec.x != 0)
+        {
+            spriter.flipX= InputVec.x < 0;
+        }
+    }
+    void OnMove(InputValue Value)
+    {
+        InputVec = Value.Get<Vector2>();
     }
 }
