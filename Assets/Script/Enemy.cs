@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed;
-    public Rigidbody2D target;
+    [SerializeField] Rigidbody2D target;
 
     bool isLive = true;
 
@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         spriter= GetComponent<SpriteRenderer>();
+        target = GameManager.Instance.Player.GetComponent<Rigidbody2D>();
     }
     void FixedUpdate()
     {
