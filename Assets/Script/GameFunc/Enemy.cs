@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class Enemy : MonoBehaviour
         spriter= GetComponent<SpriteRenderer>();
         
     }
-    void FixedUpdate()
+    void FixedUpdate()// 플레이어 추적
     {
         if (!isLive)
             return;
@@ -44,11 +45,33 @@ public class Enemy : MonoBehaviour
         isLive = true;
         health = maxHealth;
     }
-    public void Init(SpawnData data)
+    public void Init(SpawnData data)//몬스터 프리펩을 하나만 두고 스탯과 겉모습만 난이도에 맞춰 초기화해준다.
     {
         animator.runtimeAnimatorController = controller[data.spriteType];
         speed = data.speed;
         health = data.health;
         maxHealth = data.health;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Weapon"))
+            return;
+
+        health -= collision.GetComponent<Weapon>().damage;
+
+        if(health > 0)
+        {
+            // hit 
+        }
+        else
+        {
+            Dead();
+        }
+    }
+
+    void Dead()
+    {
+        gameObject.SetActive(false);
     }
 }
