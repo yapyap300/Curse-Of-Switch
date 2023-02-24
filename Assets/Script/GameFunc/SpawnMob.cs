@@ -20,7 +20,7 @@ public class SpawnMob : MonoBehaviour
         level = Mathf.Min(Mathf.FloorToInt(GameManager.Instance.gameTime / 10f), spawnDatas.Length);        
     }
 
-    IEnumerator Spawn()
+    IEnumerator Spawn()//포인트를 여러개 많이 두고 싶지 않아서 4개만 만든후 좌우상하로 랜덤값을 줘서 스폰했다
     {
         while (true)
         {
