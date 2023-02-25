@@ -9544,10 +9544,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3139496c78204344bb51817f9bcd84ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 828690831}
   pool: {fileID: 1200592639}
+  level: 0
+  maxLevel: 0
+  exp: 0
+  nextExp: 0a0000001e00000032000000460000008c00000018010000300200000807000018150000983a0000
   gameTime: 0
   maxTime: 20
-  Player: {fileID: 828690831}
 --- !u!4 &590958701
 Transform:
   m_ObjectHideFlags: 0

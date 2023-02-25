@@ -6,11 +6,18 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public PoolsManager pool;
-
-    public float gameTime;
-    public float maxTime = 2 * 10f;
+    [Header("# Game Object")]
     public Player Player;
+    public PoolsManager pool;
+    [Header("# Player Info")]
+    public int level;
+    [SerializeField] int maxLevel;
+    public int exp;
+    [SerializeField] int[] nextExp = {10,30,50,70,140,280,560,1800,5400,15000};
+    [Header("# Game Control")]
+    public float gameTime;
+    public float maxTime = 20 * 60f;
+    
 
     void Awake()
     {
@@ -24,6 +31,17 @@ public class GameManager : MonoBehaviour
         if(gameTime > maxTime)
         {
             gameTime = maxTime;
+        }
+    }
+
+    public void GetExp()
+    {
+        exp++;
+
+        if (exp == nextExp[level])
+        {
+            exp = 0;
+            level++;
         }
     }
 }
