@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     public Vector2 InputVec;
     public Scanner scanner;
-    [SerializeField] float MoveSpeed;
+    [SerializeField] float MoveSpeed;    
     Rigidbody2D Rigid;
     SpriteRenderer spriter;
     Animator anim;

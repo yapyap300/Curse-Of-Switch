@@ -11,17 +11,21 @@ public class GameManager : MonoBehaviour
     public PoolsManager pool;
     [Header("# Player Info")]
     public int level;
-    [SerializeField] int maxLevel;
+    public int maxLevel;
+    public int health;
+    public int maxHealth;
     public int exp;
-    [SerializeField] int[] nextExp = {10,30,50,70,140,280,560,1800,5400,15000};
+    public int[] nextExp = {10,30,50,70,140,280,560,1800,5400,15000};
     [Header("# Game Control")]
     public float gameTime;
-    public float maxTime = 20 * 60f;
+    public float maxTime;
     
 
     void Awake()
     {
-        Instance= this;        
+        Instance= this;
+        maxTime = 20f * 60f;
+        health = maxHealth;
     }
 
     private void Update()
