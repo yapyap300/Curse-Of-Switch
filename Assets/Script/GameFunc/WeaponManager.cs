@@ -21,7 +21,13 @@ public class WeaponManager : MonoBehaviour
     {
         Init();
         if (id == 1)
+            StartCoroutine(Stap());
+        else if (id == 3 || id == 4 || id == 5)
             StartCoroutine(Fire());
+    }
+    void OnEnable()// 처음에는 비활성화 상태이다가 최초 무기를 선택한 후 활성화 시킬 예정이다. 일단은 테스트를 위해 start에 씀
+    {
+        
     }
     void Update()//원거리 무기는 update에서 발사하는것 보다 코루틴을 이용하는게 훨씬 좋을것 같아서 start에 작성
     {
@@ -41,10 +47,10 @@ public class WeaponManager : MonoBehaviour
         switch (id)
         {
             case 0:
-                count++;
+                count += 2;
                 Stack();
                 break;
-            case 1:
+            case 3:
                 count++;                
                 break;
         }
@@ -55,10 +61,13 @@ public class WeaponManager : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 150;
+                speed = 100;
                 Stack();
                 break;
             case 1:
+                speed = 5;
+                break;
+            case 3:
                 speed = 1f;
                 break;
         }
@@ -81,14 +90,33 @@ public class WeaponManager : MonoBehaviour
             
             weapon.localPosition = Vector3.zero;
             weapon.localRotation = Quaternion.identity;
-            Vector3 rotVec = Vector3.forward * 360 * index / count;
+            Vector3 rotVec = 360 * index * Vector3.forward / count;
             weapon.Rotate(rotVec);
-            weapon.Translate(weapon.up * 1.5f,Space.World);
+            weapon.Translate(weapon.up * 6f,Space.World);
             weapon.GetComponent<Weapon>().Init(damage,-1,Vector3.zero);// -1은 근접무기는 무조건 관통하게 하려고 한것
         }
     }
+    IEnumerator Stap()
+    {        
+        while (true)
+        {
+            Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
+            if (weapon.parent != transform)
+                weapon.parent = transform;
+            weapon.localPosition = Vector3.zero;
+            weapon.localRotation = Quaternion.identity;
+            Vector2 rotVec = GameManager.Instance.Player.InputVec;
+            if (rotVec.magnitude == 0)
+                rotVec = Vector2.right;
+            transform.rotation = Quaternion.LookRotation(Vector3.forward,rotVec);//무기 프리펩이아니라 프리펩의 부모인 관리오브젝트 자체가 돌아야함         
+            weapon.GetComponent<Weapon>().Init(damage, -1, Vector3.zero);           
+            
+            yield return new WaitForSeconds(5.0f / count);
+        }
 
-    IEnumerator Fire()
+    }
+
+    IEnumerator Fire()// 모든 원거리 무기가 기본으로 실행하는 메서드
     {
         while (true)
         {

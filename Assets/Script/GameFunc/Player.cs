@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public Vector2 InputVec;
     public Scanner scanner;
     [SerializeField] float MoveSpeed;    
-    Rigidbody2D Rigid;
+    public Rigidbody2D Rigid;
     SpriteRenderer spriter;
     Animator anim;
     // Start is called before the first frame update
