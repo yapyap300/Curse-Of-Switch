@@ -7,8 +7,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] int id;// 어떤 무기인지 구분하여 다른 동작
     [SerializeField] int prefabId;//오브젝트 풀에서 가져올 무기 구분용
     [SerializeField] float damage;
-    [SerializeField] int count;//주변을 도는 무기는 갯수, 휘두르는 무기는 함수 호출 간격용 변수, 원거리무기 0번째는 관통력으로 사용    
-    [SerializeField] float speed;//회전 속도 또는 원거리 무기의 발사속도에 사용
+    [SerializeField] int count;//주변을 도는 무기와 투척무기는 갯수, 휘두르는 무기는 함수 호출 간격용 변수, 원거리무기 0번째는 관통력으로 사용    
+    [SerializeField] float speed;//회전 속도, 찌르는 공격속도,원거리 무기의 발사속도에 사용
     [SerializeField] int level;//현재 무기 레벨상황 스탯증가에 다양하게 사용
     public int maxLevel;//업글가능한 무기의 최대 업글레벨
     
@@ -22,6 +22,8 @@ public class WeaponManager : MonoBehaviour
         Init();
         if (id == 1)
             StartCoroutine(Stap());
+        else if (id == 2)
+            StartCoroutine(Throw());
         else if (id == 3 || id == 4 || id == 5)
             StartCoroutine(Fire());
     }
@@ -67,6 +69,9 @@ public class WeaponManager : MonoBehaviour
             case 1:
                 speed = 5;
                 break;
+            case 2:
+                speed = 10;
+                break;
             case 3:
                 speed = 1f;
                 break;
@@ -96,7 +101,7 @@ public class WeaponManager : MonoBehaviour
             weapon.GetComponent<Weapon>().Init(damage,-1,Vector3.zero);// -1은 근접무기는 무조건 관통하게 하려고 한것
         }
     }
-    IEnumerator Stap()
+    IEnumerator Stap()//공격속도에 따라 캐릭터가 진행하는 방향으로 무기를 찌르는 메서드 가만히 서있으면 오른쪽을 찌름
     {        
         while (true)
         {
@@ -111,9 +116,26 @@ public class WeaponManager : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(Vector3.forward,rotVec);//무기 프리펩이아니라 프리펩의 부모인 관리오브젝트 자체가 돌아야함         
             weapon.GetComponent<Weapon>().Init(damage, -1, Vector3.zero);           
             
-            yield return new WaitForSeconds(5.0f / count);
+            yield return new WaitForSeconds(speed / count);
         }
 
+    }
+    IEnumerator Throw()//위쪽 랜덤한 각도로 낫을 투척하는 메서드
+    {
+        while (true)
+        {
+            for (int index = 0; index < count; index++)
+            {
+                Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
+                weapon.SetPositionAndRotation(transform.position, Quaternion.identity);
+                Vector3 rotVec = new(0f,0f,Random.Range(-45f,45f));
+                weapon.Translate(weapon.up * 1.5f, Space.World);
+                weapon.Rotate(rotVec);
+                weapon.GetComponent<Weapon>().Init(damage, -1, Vector3.zero);
+                
+            }
+            yield return new WaitForSeconds(speed);
+        }
     }
 
     IEnumerator Fire()// 모든 원거리 무기가 기본으로 실행하는 메서드

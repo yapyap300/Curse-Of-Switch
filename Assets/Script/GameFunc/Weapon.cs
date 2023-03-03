@@ -20,9 +20,14 @@ public class Weapon : MonoBehaviour
         this.damage = damage;
         this.per = per;
 
-        if(per > -1)
+        if(per > -1)//원거리무기인지 아닌지 구별
         {
             rigid.velocity = dir * 10f;
+        }
+        else if(rigid != null)//근거리무기인데 rigid을 가지고있는 투척무기만 이곳을 실행
+        {
+            rigid.AddForce(transform.up * 750f,ForceMode2D.Impulse);
+            rigid.AddTorque(850f);
         }
         if (animator != null)
             animator.SetTrigger("onEnable");
@@ -30,8 +35,11 @@ public class Weapon : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (20 < Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position))//총알 오브젝트 관리를 위해 작성
-            gameObject.SetActive(false);        
+        if (20 < Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
+        {
+            rigid.velocity = Vector2.zero;
+            gameObject.SetActive(false);
+        }
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
