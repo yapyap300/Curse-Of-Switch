@@ -19,13 +19,22 @@ public class WeaponManager : MonoBehaviour
     }
     void Start()
     {
-        Init();
-        if (id == 1)
-            StartCoroutine(Stap());
-        else if (id == 2)
-            StartCoroutine(Throw());
-        else if (id == 3 || id == 4 || id == 5)
-            StartCoroutine(Fire());
+        Init();        
+        switch (id)
+        {            
+            case 1:
+                StartCoroutine(Stap());
+                break;
+            case 2:
+                StartCoroutine(Throw());
+                break;
+            case 3:
+                StartCoroutine(Fire(false));
+                break;
+            case 4:
+                StartCoroutine(Fire(true));
+                break;
+        }
     }
     void OnEnable()// 처음에는 비활성화 상태이다가 최초 무기를 선택한 후 활성화 시킬 예정이다. 일단은 테스트를 위해 start에 씀
     {
@@ -67,13 +76,16 @@ public class WeaponManager : MonoBehaviour
                 Stack();
                 break;
             case 1:
-                speed = 5;
+                speed = 5f;
                 break;
             case 2:
-                speed = 10;
+                speed = 10f;
                 break;
             case 3:
                 speed = 1f;
+                break;
+            case 4:
+                speed = 0.5f;
                 break;
         }
     }
@@ -138,7 +150,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    IEnumerator Fire()// 모든 원거리 무기가 기본으로 실행하는 메서드
+    IEnumerator Fire(bool isTrack)// 모든 원거리 무기가 기본으로 실행하는 메서드 유도무기인지 아닌지 구별하는 파라메터 사용
     {
         while (true)
         {
@@ -149,9 +161,10 @@ public class WeaponManager : MonoBehaviour
                 dir = dir.normalized;
 
                 Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-                bullet.position = transform.position;
-                bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-                bullet.GetComponent<Weapon>().Init(damage, count, dir);
+                bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
+                if (isTrack)
+                    bullet.GetComponent<Weapon>().isTrack = true;// 유도기능 on
+                bullet.GetComponent<Weapon>().Init(damage, count, dir);                
             }
 
             yield return new WaitForSeconds(speed / level);
