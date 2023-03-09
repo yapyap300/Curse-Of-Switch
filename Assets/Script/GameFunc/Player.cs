@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     {
         Vector2 NextVec = InputVec * MoveSpeed * Time.fixedDeltaTime;
         Rigid.MovePosition(Rigid.position + NextVec);
+        Rigid.velocity = Vector2.zero;
     }
     void LateUpdate()
     {
