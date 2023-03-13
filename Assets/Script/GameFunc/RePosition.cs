@@ -15,7 +15,7 @@ public class RePosition : MonoBehaviour
         if (!collision.CompareTag("Area"))
             return;
 
-        Vector3 PlayerPos = GameManager.Instance.Player.transform.position;
+        Vector3 PlayerPos = GameManager.Instance.Player1.transform.position;
         Vector3 MyPos = transform.position;
 
         float dirX = PlayerPos.x - MyPos.x;
@@ -26,7 +26,7 @@ public class RePosition : MonoBehaviour
 
         dirX = dirX < 0 ? -1 : 1;
         dirY = dirY < 0 ? -1 : 1;
-        Vector3 PlayerDir = GameManager.Instance.Player.InputVec;
+        Vector3 PlayerDir = GameManager.Instance.Player1.InputVec;
         switch (transform.tag)
         {
             case "Map":

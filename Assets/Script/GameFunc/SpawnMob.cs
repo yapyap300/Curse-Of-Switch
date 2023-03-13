@@ -5,7 +5,8 @@ public class SpawnMob : MonoBehaviour
 {
     [SerializeField] Transform[] spawnPosition;
     public SpawnData[] spawnDatas;
-    int level = 0;    
+    int level = 0;
+    bool upgrade = false;
 
     void Awake()
     {
@@ -16,8 +17,24 @@ public class SpawnMob : MonoBehaviour
         StartCoroutine(Spawn());
     }
     void Update()
-    {        
-        level = Mathf.Min(Mathf.FloorToInt(GameManager.Instance.gameTime / 300f), spawnDatas.Length);        
+    {
+        if (!upgrade && GameManager.Instance.gameTime >= 15f * 60f)
+            UpgradeStage();
+        if(GameManager.Instance.gameTime < 15f * 60f)
+            level = Mathf.Min(Mathf.FloorToInt(GameManager.Instance.gameTime / (15f * 60f)), spawnDatas.Length);
+        else
+            level = Mathf.Min(Mathf.FloorToInt((GameManager.Instance.gameTime - 15f * 60f) / (15f * 60f)), spawnDatas.Length);
+    }
+
+    void UpgradeStage()
+    {
+        upgrade = true;
+        foreach(SpawnData data in spawnDatas)
+        {
+            data.health *= 2;
+            data.speed *= 1.5f;
+            data.spawnTime *= 0.7f;
+        }
     }
 
     IEnumerator Spawn()//포인트를 여러개 많이 두고 싶지 않아서 4개만 만든후 좌우상하로 랜덤값을 줘서 스폰했다

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Rigidbody2D target;
 
     bool isLive;
-
+    
     Rigidbody2D rigid;
     Animator animator;
     SpriteRenderer spriter;
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour
         spriter= GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
         wait =  new WaitForFixedUpdate();        
-    }
+    }    
     void FixedUpdate()// 플레이어 추적
     {
         if (!isLive || animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
@@ -44,7 +45,7 @@ public class Enemy : MonoBehaviour
     }
     void OnEnable()
     {
-        target = GameManager.Instance.Player.GetComponent<Rigidbody2D>();
+        target = GameManager.Instance.Player1.GetComponent<Rigidbody2D>();
         isLive = true;
         col.enabled = true;
         rigid.simulated = true;
@@ -61,12 +62,12 @@ public class Enemy : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collision)
-    {
+    {        
         if (!collision.CompareTag("Weapon") || !isLive)
             return;
 
         health -= collision.GetComponent<Weapon>().damage;
-        StartCoroutine(knockBack());
+        StartCoroutine(KnockBack());
 
         if(health > 0)
         {
@@ -82,10 +83,15 @@ public class Enemy : MonoBehaviour
             GameManager.Instance.GetExp();
         }
     }
-    IEnumerator knockBack()
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player"))
+            GameManager.Instance.Player1.TakeDamage();
+    }
+    IEnumerator KnockBack()
     {
         yield return wait;
-        Vector3 playerPos = GameManager.Instance.Player.transform.position;
+        Vector3 playerPos = GameManager.Instance.Player1.transform.position;
         Vector3 dir = transform.position- playerPos;
         rigid.AddForce(dir.normalized * 3,ForceMode2D.Impulse);
     }

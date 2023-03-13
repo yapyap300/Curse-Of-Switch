@@ -39,8 +39,8 @@ public class HUD : MonoBehaviour
                 myText.text = $"{min:D2}:{sec:D2}";
                 break;
             case InfoType.Health:
-                float curHealth = GameManager.Instance.health;
-                float maxHealth = GameManager.Instance.maxHealth;
+                float curHealth = GameManager.Instance.Player1.health;
+                float maxHealth = GameManager.Instance.Player1.maxHealth;
                 mySlider.value = curHealth / maxHealth;
                 break;
             

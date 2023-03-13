@@ -39,7 +39,7 @@ public class Weapon : MonoBehaviour
                 rigid.velocity = dir * 10f;
                 break;
             case 4:
-                target = GameManager.Instance.Player.scanner.nearTarget.GetComponent<Rigidbody2D>();
+                target = GameManager.Instance.Player1.scanner.nearTarget.GetComponent<Rigidbody2D>();
                 break;
             case 5:
                 col.enabled = false;
@@ -50,7 +50,7 @@ public class Weapon : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (20 < Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
+        if (20 < Vector3.Distance(transform.position, GameManager.Instance.Player1.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
         {
             rigid.velocity = Vector2.zero;
             gameObject.SetActive(false);
