@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     Animator anim;
     public Vector2 InputVec;
     public Scanner scanner;
+    [SerializeField] WeaponManager[] myWeapon;
     [Header("# Player Info")]
     public float health;
     public int maxHealth;
@@ -18,7 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] int armor;
     [SerializeField] int extraDamage;
     public int[] statScore;
-
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -32,7 +33,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 NextVec = InputVec * MoveSpeed * Time.fixedDeltaTime;
+        Vector2 NextVec = MoveSpeed * Time.fixedDeltaTime * InputVec;
         rigid.MovePosition(rigid.position + NextVec);
         rigid.velocity = Vector2.zero;
     }
@@ -72,6 +73,8 @@ public class Player : MonoBehaviour
                 break;
             case 3:
                 extraDamage++;
+                for(int i = 0; i < myWeapon.Length; i++)
+                    myWeapon[i].PlusDamage();
                 break;
         }        
     }
@@ -92,6 +95,8 @@ public class Player : MonoBehaviour
                 break;
             case 3:
                 extraDamage--;
+                for (int i = 0; i < myWeapon.Length; i++)
+                    myWeapon[i].MinusDamage();
                 break;
         }
     }

@@ -57,9 +57,7 @@ public class WeaponManager : MonoBehaviour
 
     public void LevelUp()//근접무기는 레벨업시 공격력과 갯수 증가 원거리무기는 0번째를 제외하고 관통력은 증가안하고 발사속도만 증가
     {
-        if (isMax) return;
-        if (level == 0)        
-            gameObject.SetActive(true);        
+        if (isMax) return;                
         level++;
         switch (id)//원래 데미지를 2배씩 증가였는데 난이도 조절이 힘들어서 각자 무기마다 정해진 데미지가 증가하게함
         {
@@ -87,6 +85,8 @@ public class WeaponManager : MonoBehaviour
                 damage += 20;
                 break;
         }
+        if (level == 0)//무기를 처음 활성화 할때 스탯 증가를 먼저하지 않으면 코루틴의 반복 주기를 계산할때 count를 가지고 계산하는 무기들이 count를 0으로 계산해서 오류를 띄움        
+            gameObject.SetActive(true);
     }
     public void LevelDown()
     {
@@ -150,7 +150,10 @@ public class WeaponManager : MonoBehaviour
     {
         plusDamage++;
     }
-
+    public void MinusDamage()
+    {
+        plusDamage--;
+    }
     void Stack()// 주변을 도는 근접 공격용 메서드
     {
         for(int index = 0; index < count; index++)

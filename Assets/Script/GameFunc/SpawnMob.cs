@@ -37,6 +37,21 @@ public class SpawnMob : MonoBehaviour
         }
     }
 
+    public void StatUp(int randomStat)//스폰시간은 건들기에는 너무 난이도에 예민한 수치라서 안 건들이기로 했다. delegate를 이용하기위해 스탯업의 형태를 통일함
+    {        
+        foreach (SpawnData data in spawnDatas)
+        {
+            switch (randomStat)
+            {
+                case 0:
+                    data.health += (int)(data.health / 10);
+                    break;
+                case 1:
+                    data.speed += 0.2f;
+                    break;               
+            }           
+        }
+    }
     IEnumerator Spawn()//포인트를 여러개 많이 두고 싶지 않아서 4개만 만든후 좌우상하로 랜덤값을 줘서 스폰했다
     {
         while (true)
@@ -57,11 +72,4 @@ public class SpawnMob : MonoBehaviour
             yield return new WaitForSeconds(spawnDatas[level].spawnTime);
         }
     }
-}
-[System.Serializable]
-public class SpawnData{
-    public int spriteType;
-    public float spawnTime;
-    public int health;
-    public float speed;
 }
