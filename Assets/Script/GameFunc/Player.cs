@@ -16,8 +16,7 @@ public class Player : MonoBehaviour
     public float health;
     public int maxHealth;
     [SerializeField] float MoveSpeed;
-    [SerializeField] int armor;
-    [SerializeField] int extraDamage;
+    [SerializeField] int armor;    
     public int[] statScore;
     
     // Start is called before the first frame update
@@ -71,8 +70,7 @@ public class Player : MonoBehaviour
             case 2:
                 maxHealth += 20;
                 break;
-            case 3:
-                extraDamage++;
+            case 3:                
                 for(int i = 0; i < myWeapon.Length; i++)
                     myWeapon[i].PlusDamage();
                 break;
@@ -93,8 +91,7 @@ public class Player : MonoBehaviour
             case 2:
                 maxHealth -= 20;
                 break;
-            case 3:
-                extraDamage--;
+            case 3:                
                 for (int i = 0; i < myWeapon.Length; i++)
                     myWeapon[i].MinusDamage();
                 break;

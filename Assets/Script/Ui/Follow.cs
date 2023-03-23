@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Follow : MonoBehaviour
 {
+    [SerializeField] int id;
+    [SerializeField] Camera cam;
     RectTransform rect;
 
     void Awake()
@@ -13,6 +15,9 @@ public class Follow : MonoBehaviour
 
     void FixedUpdate()
     {
-        rect.position = Camera.main.WorldToScreenPoint(GameManager.Instance.Player1.transform.position);
+        if(id == 1)
+            rect.position = cam.WorldToScreenPoint(GameManager.Instance.Player1.transform.position);
+        else
+            rect.position = cam.WorldToScreenPoint(GameManager.Instance.Player2.transform.position);
     }
 }

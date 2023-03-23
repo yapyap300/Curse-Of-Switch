@@ -44,8 +44,7 @@ public class Enemy : MonoBehaviour
         spriter.flipX = target.position.x < rigid.position.x;        
     }
     void OnEnable()
-    {
-        target = GameManager.Instance.Player1.GetComponent<Rigidbody2D>();
+    {        
         isLive = true;
         col.enabled = true;
         rigid.simulated = true;
@@ -53,8 +52,12 @@ public class Enemy : MonoBehaviour
         spriter.sortingOrder = 2;
         health = maxHealth;
     }
-    public void Init(SpawnData data)//몬스터 프리펩을 하나만 두고 스탯과 겉모습만 난이도에 맞춰 초기화해준다.
+    public void Init(SpawnData data,bool second)//몬스터 프리펩을 하나만 두고 스탯과 겉모습만 난이도에 맞춰 초기화해준다.
     {
+        if(second)
+            target = GameManager.Instance.Player2.GetComponent<Rigidbody2D>();
+        else
+            target = GameManager.Instance.Player1.GetComponent<Rigidbody2D>();
         animator.runtimeAnimatorController = controller[data.spriteType];
         speed = data.speed;
         health = data.health;

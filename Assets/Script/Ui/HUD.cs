@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public enum InfoType {Exp,Level,Time,Health}
+    public enum InfoType {Exp,Level,Time,Health1,Health2}
     public InfoType type;
 
     Text myText;
@@ -38,12 +38,21 @@ public class HUD : MonoBehaviour
                 int sec = Mathf.FloorToInt(remainTime % 60);
                 myText.text = $"{min:D2}:{sec:D2}";
                 break;
-            case InfoType.Health:
-                float curHealth = GameManager.Instance.Player1.health;
-                float maxHealth = GameManager.Instance.Player1.maxHealth;
-                mySlider.value = curHealth / maxHealth;
+            case InfoType.Health1:
+                {
+                    float curHealth = GameManager.Instance.Player1.health;
+                    float maxHealth = GameManager.Instance.Player1.maxHealth;
+                    mySlider.value = curHealth / maxHealth;
+                    break;
+                }
+            case InfoType.Health2:
+                {
+                    float curHealth = GameManager.Instance.Player2.health;
+                    float maxHealth = GameManager.Instance.Player2.maxHealth;
+                    mySlider.value = curHealth / maxHealth;
+                }
                 break;
-            
+
         }
     }
 }

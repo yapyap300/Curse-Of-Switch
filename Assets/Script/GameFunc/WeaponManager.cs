@@ -85,7 +85,7 @@ public class WeaponManager : MonoBehaviour
                 damage += 20;
                 break;
         }
-        if (level == 0)//무기를 처음 활성화 할때 스탯 증가를 먼저하지 않으면 코루틴의 반복 주기를 계산할때 count를 가지고 계산하는 무기들이 count를 0으로 계산해서 오류를 띄움        
+        if (level == 1)//무기를 처음 활성화 할때 스탯 증가를 먼저하지 않으면 코루틴의 반복 주기를 계산할때 count를 가지고 계산하는 무기들이 count를 0으로 계산해서 오류를 띄움        
             gameObject.SetActive(true);
     }
     public void LevelDown()

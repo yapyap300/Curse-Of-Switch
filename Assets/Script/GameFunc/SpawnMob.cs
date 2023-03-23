@@ -6,6 +6,7 @@ public class SpawnMob : MonoBehaviour
     [SerializeField] Transform[] spawnPosition;
     public SpawnData[] spawnDatas;
     int level = 0;
+    [SerializeField] bool second;
     bool upgrade = false;
 
     void Awake()
@@ -57,7 +58,7 @@ public class SpawnMob : MonoBehaviour
         while (true)
         {
             GameObject enemy = GameManager.Instance.pool.Get(0);
-            enemy.GetComponent<Enemy>().Init(spawnDatas[level]);
+            enemy.GetComponent<Enemy>().Init(spawnDatas[level],second);
             int ranPos = Random.Range(1, 5);
             if (ranPos == 1 || ranPos == 2)
             {
