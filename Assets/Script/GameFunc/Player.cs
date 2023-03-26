@@ -100,9 +100,5 @@ public class Player : MonoBehaviour
     void Dead()//Á×´Â¾ÀÀ¸·Î ³Ñ±â±â
     {
 
-    }
-    void OnMove(InputValue Value)
-    {
-        InputVec = Value.Get<Vector2>();
-    }
+    }    
 }

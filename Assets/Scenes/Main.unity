@@ -580,6 +580,7 @@ MonoBehaviour:
   level: 0
   maxLevel: 5
   isMax: 0
+  player: {fileID: 1808745545}
 --- !u!1 &185544589
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +967,7 @@ GameObject:
   - component: {fileID: 337750783}
   - component: {fileID: 337750782}
   m_Layer: 0
-  m_Name: Tilemap (1)
+  m_Name: Tilemap 1
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -999,6 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 2
 --- !u!66 &337750783
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -10643,7 +10645,7 @@ GameObject:
   - component: {fileID: 520488335}
   - component: {fileID: 520488334}
   m_Layer: 0
-  m_Name: Tilemap (1)
+  m_Name: Tilemap 1
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10676,6 +10678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
 --- !u!66 &520488335
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -19990,6 +19993,7 @@ MonoBehaviour:
   level: 0
   maxLevel: 5
   isMax: 0
+  player: {fileID: 828690835}
 --- !u!1 &581128464
 GameObject:
   m_ObjectHideFlags: 0
@@ -20039,6 +20043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 2
 --- !u!66 &581128467
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -29360,8 +29365,8 @@ MonoBehaviour:
     - "\uBB34\uAE30++ \uBB34\uAE30-"
     - "\uC2A4\uD0EF++ \uC2A4\uD0EF--"
     - "\uC2A4\uD0EF++ \uBAAC\uC2A4\uD130++"
-  Player1: {fileID: 828690831}
-  Player2: {fileID: 1808745538}
+  Player1: {fileID: 828690835}
+  Player2: {fileID: 1808745545}
   EnemyControl:
   - {fileID: 1574242542}
   - {fileID: 1704793118}
@@ -29791,6 +29796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
 --- !u!66 &678209436
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -39077,7 +39083,7 @@ GameObject:
   - component: {fileID: 785868524}
   - component: {fileID: 785868523}
   m_Layer: 0
-  m_Name: Tilemap (3)
+  m_Name: Tilemap 3
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39110,6 +39116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 2
 --- !u!66 &785868524
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -48431,8 +48438,7 @@ GameObject:
   - component: {fileID: 828690827}
   - component: {fileID: 828690832}
   - component: {fileID: 828690833}
-  - component: {fileID: 828690831}
-  - component: {fileID: 828690834}
+  - component: {fileID: 828690835}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -48548,29 +48554,6 @@ Transform:
   m_Father: {fileID: 1869835001}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &828690831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828690826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 937d4a37c53f35c41b650cde95f2d013, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InputVec: {x: 0, y: 0}
-  scanner: {fileID: 0}
-  myWeapon:
-  - {fileID: 1875351850}
-  - {fileID: 562669349}
-  - {fileID: 1953201830}
-  health: 0
-  maxHealth: 50
-  MoveSpeed: 3
-  armor: 0
-  statScore: 00000000000000000000000000000000
 --- !u!114 &828690832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48595,10 +48578,18 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ccdea4a2-cf65-470d-bf46-8ae211726ef4
+    m_ActionName: Player1/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b5057ec4-5dbb-41a4-8e79-04ccb27b6a74
+    m_ActionName: MainPlayer/Move2[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: Player1
+  m_DefaultActionMap: MainPlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 2026989007}
 --- !u!95 &828690833
@@ -48621,7 +48612,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &828690834
+--- !u!114 &828690835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48630,14 +48621,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 828690826}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 261f615c6df5dc246ba188b935e134af, type: 3}
+  m_Script: {fileID: 11500000, guid: 282917c409e28234d8a49165fd999985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanRange: 7
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  nearTarget: {fileID: 0}
+  InputVec: {x: 0, y: 0}
+  scanner: {fileID: 0}
+  myWeapon:
+  - {fileID: 1875351850}
+  - {fileID: 562669349}
+  - {fileID: 1953201830}
+  health: 0
+  maxHealth: 50
+  MoveSpeed: 3
+  armor: 0
+  statScore: 00000000000000000000000000000000
 --- !u!1 &836455633
 GameObject:
   m_ObjectHideFlags: 0
@@ -49602,7 +49599,7 @@ GameObject:
   - component: {fileID: 1202281052}
   - component: {fileID: 1202281051}
   m_Layer: 0
-  m_Name: Tilemap (2)
+  m_Name: Tilemap 2
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49635,6 +49632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
 --- !u!66 &1202281052
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -58925,7 +58923,7 @@ GameObject:
   - component: {fileID: 1330872305}
   - component: {fileID: 1330872304}
   m_Layer: 0
-  m_Name: Tilemap (3)
+  m_Name: Tilemap 3
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58958,6 +58956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
 --- !u!66 &1330872305
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -69004,6 +69003,7 @@ MonoBehaviour:
   level: 0
   maxLevel: 5
   isMax: 0
+  player: {fileID: 1808745545}
 --- !u!1 &1679530423
 GameObject:
   m_ObjectHideFlags: 0
@@ -69222,7 +69222,7 @@ GameObject:
   - component: {fileID: 1808745541}
   - component: {fileID: 1808745540}
   - component: {fileID: 1808745539}
-  - component: {fileID: 1808745538}
+  - component: {fileID: 1808745545}
   - component: {fileID: 1808745537}
   m_Layer: 0
   m_Name: Player 2
@@ -69248,29 +69248,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   nearTarget: {fileID: 0}
---- !u!114 &1808745538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1808745536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 937d4a37c53f35c41b650cde95f2d013, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InputVec: {x: 0, y: 0}
-  scanner: {fileID: 0}
-  myWeapon:
-  - {fileID: 144215466}
-  - {fileID: 2091931804}
-  - {fileID: 1656701382}
-  health: 0
-  maxHealth: 50
-  MoveSpeed: 3
-  armor: 0
-  statScore: 00000000000000000000000000000000
 --- !u!95 &1808745539
 Animator:
   serializedVersion: 4
@@ -69315,10 +69292,18 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ccdea4a2-cf65-470d-bf46-8ae211726ef4
+    m_ActionName: Player1/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b29a44a-316b-490f-8c30-e7a1e7f35fbe
+    m_ActionName: Player2/WASD[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player2
+  m_DefaultActionMap: MainPlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 1475982859}
 --- !u!70 &1808745541
@@ -69429,6 +69414,29 @@ Transform:
   m_Father: {fileID: 46377664}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1808745545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808745536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa8c0dff9e07fe4f96b5cc5373eea3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InputVec: {x: 0, y: 0}
+  scanner: {fileID: 0}
+  myWeapon:
+  - {fileID: 144215466}
+  - {fileID: 2091931804}
+  - {fileID: 1656701382}
+  health: 0
+  maxHealth: 50
+  MoveSpeed: 3
+  armor: 0
+  statScore: 00000000000000000000000000000000
 --- !u!1 &1861895124
 GameObject:
   m_ObjectHideFlags: 0
@@ -69694,11 +69702,12 @@ MonoBehaviour:
   prefabId: 1
   damage: 0
   plusDamage: 0
-  count: 2
+  count: 0
   speed: 0
   level: 0
   maxLevel: 5
   isMax: 0
+  player: {fileID: 828690835}
 --- !u!1 &1888828248
 GameObject:
   m_ObjectHideFlags: 0
@@ -69799,7 +69808,7 @@ GameObject:
   - component: {fileID: 1891231093}
   - component: {fileID: 1891231092}
   m_Layer: 0
-  m_Name: Tilemap (2)
+  m_Name: Tilemap 2
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69832,6 +69841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee389376c99ac40939750373098353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 2
 --- !u!66 &1891231093
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -79189,6 +79199,7 @@ MonoBehaviour:
   level: 0
   maxLevel: 5
   isMax: 0
+  player: {fileID: 828690835}
 --- !u!1 &2026989005
 GameObject:
   m_ObjectHideFlags: 0
@@ -79542,6 +79553,7 @@ MonoBehaviour:
   level: 0
   maxLevel: 5
   isMax: 0
+  player: {fileID: 1808745545}
 --- !u!1 &2135366157
 GameObject:
   m_ObjectHideFlags: 0

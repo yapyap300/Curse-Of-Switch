@@ -13,17 +13,14 @@ public class WeaponManager : MonoBehaviour
     public int level;//현재 무기 레벨상황 스탯증가에 다양하게 사용
     [SerializeField] int maxLevel;
     public bool isMax;
+
+    [SerializeField] Player player;
     
-    Player player;
-    void Awake()
-    {
-        player = GetComponentInParent<Player>();
-    }
     void Start()
     {
         Init();               
     }
-    void OnEnable()// 처음에는 비활성화 상태이다가 최초 무기를 선택한 후 활성화 시킬 예정이다. 일단은 테스트를 위해 start에 씀
+    void OnEnable()
     {
         switch (id)
         {            
@@ -37,10 +34,10 @@ public class WeaponManager : MonoBehaviour
                 StartCoroutine(Throw());
                 break;
             case 3:
-                StartCoroutine(Fire(false));
+                StartCoroutine(Fire());
                 break;
             case 4:
-                StartCoroutine(Fire(true));
+                StartCoroutine(Fire());
                 break;
             case 5:
                 StartCoroutine(Boom());
@@ -181,6 +178,7 @@ public class WeaponManager : MonoBehaviour
     {        
         while (true)
         {
+            yield return new WaitForSeconds(speed / count);
             Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
             if (weapon.parent != transform)
                 weapon.parent = transform;
@@ -190,9 +188,7 @@ public class WeaponManager : MonoBehaviour
             if (rotVec.magnitude == 0)
                 rotVec = Vector2.right;
             transform.rotation = Quaternion.LookRotation(Vector3.forward,rotVec);//무기 프리펩이아니라 프리펩의 부모인 관리오브젝트 자체가 돌아야함         
-            weapon.GetComponent<Weapon>().Init(damage + plusDamage, -1, Vector3.zero,id);           
-            
-            yield return new WaitForSeconds(speed / count);
+            weapon.GetComponent<Weapon>().Init(damage + plusDamage, -1, Vector3.zero,id);        
         }
 
     }
@@ -200,6 +196,7 @@ public class WeaponManager : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(speed / level);
             for (int index = 0; index < count; index++)
             {
                 Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
@@ -209,11 +206,10 @@ public class WeaponManager : MonoBehaviour
                 weapon.Rotate(rotVec);
                 weapon.GetComponent<Weapon>().Init(damage + plusDamage, -1, Vector3.zero,id);
                 
-            }
-            yield return new WaitForSeconds(speed / level);
+            }            
         }
     }
-    IEnumerator Fire(bool isTrack)// 원거리 무기가 기본으로 실행하는 메서드 유도무기인지 아닌지 구별하는 파라메터 사용
+    IEnumerator Fire()// 원거리 무기가 기본으로 실행하는 메서드 유도무기인지 아닌지 구별하는 파라메터 사용
     {
         while (true)
         {
@@ -224,9 +220,8 @@ public class WeaponManager : MonoBehaviour
                 dir = dir.normalized;
 
                 Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-                bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
-                if (isTrack)
-                    bullet.GetComponent<Weapon>().isTrack = true;// 유도기능 on
+                
+                bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));                
                 bullet.GetComponent<Weapon>().Init(damage + plusDamage, count, dir,id);                
             }
 
@@ -242,6 +237,7 @@ public class WeaponManager : MonoBehaviour
             dir = dir.normalized;
 
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+            
             bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));            
             bullet.GetComponent<Weapon>().Init(damage + plusDamage, -1, targetPos, id);//폭발무기는 적이랑 부딫여서 데미지를 주지않음
 

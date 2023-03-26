@@ -6,7 +6,8 @@ public class Weapon : MonoBehaviour
 {
     public float damage;
     public int per;
-    public bool isTrack = false;//원거리무기중에 유도인지 일반인지 구별하기위해
+    bool isTrack;//원거리무기중에 유도인지 일반인지 구별하기위해
+    int id;
     Collider2D col;
     Rigidbody2D rigid;
     Animator animator;
@@ -14,6 +15,7 @@ public class Weapon : MonoBehaviour
     Rigidbody2D target;//유도무기에 사용될 타겟
     Vector3 targetPos;//폭발무기에 쓸 랜덤타겟위치
 
+    [SerializeField]Player master;
     void Awake()
     {
         col = GetComponent<Collider2D>();
@@ -23,6 +25,7 @@ public class Weapon : MonoBehaviour
     }
     public void Init(float damage, int per, Vector3 dir, int id)//무기마다 초기화를 구분해주기 힘들어서 id 추가
     {
+        this.id = id;
         this.damage = damage;
         this.per = per;
 
@@ -31,7 +34,7 @@ public class Weapon : MonoBehaviour
             case 1:
                 animator.SetTrigger("onEnable");
                 break;
-            case 2:
+            case 2:                
                 rigid.AddForce(transform.up * 750f, ForceMode2D.Impulse);
                 rigid.AddTorque(850f);
                 break;
@@ -39,7 +42,8 @@ public class Weapon : MonoBehaviour
                 rigid.velocity = dir * 10f;
                 break;
             case 4:
-                target = GameManager.Instance.Player1.scanner.nearTarget.GetComponent<Rigidbody2D>();
+                isTrack = true;
+                target = GameManager.Instance.Player2.scanner.nearTarget.GetComponent<Rigidbody2D>();
                 break;
             case 5:
                 col.enabled = false;
@@ -50,7 +54,12 @@ public class Weapon : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (20 < Vector3.Distance(transform.position, GameManager.Instance.Player1.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
+        if(id == 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.Player1.transform.position))
+        {
+            rigid.velocity = Vector2.zero;
+            gameObject.SetActive(false);
+        }
+        else if (id > 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.Player2.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
         {
             rigid.velocity = Vector2.zero;
             gameObject.SetActive(false);

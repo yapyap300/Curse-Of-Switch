@@ -5,6 +5,7 @@ using UnityEngine;
 public class RePosition : MonoBehaviour
 {
     Collider2D coll;
+    [SerializeField] int id;
 
     void Awake()
     {
@@ -14,8 +15,11 @@ public class RePosition : MonoBehaviour
     {
         if (!collision.CompareTag("Area"))
             return;
-
-        Vector3 PlayerPos = GameManager.Instance.Player1.transform.position;
+        Vector3 PlayerPos;
+        if(id == 1)
+            PlayerPos = GameManager.Instance.Player1.transform.position;
+        else
+            PlayerPos = GameManager.Instance.Player2.transform.position;
         Vector3 MyPos = transform.position;
 
         float dirX = PlayerPos.x - MyPos.x;
@@ -26,7 +30,13 @@ public class RePosition : MonoBehaviour
 
         dirX = dirX < 0 ? -1 : 1;
         dirY = dirY < 0 ? -1 : 1;
+
         Vector3 PlayerDir = GameManager.Instance.Player1.InputVec;
+
+        if (id == 1)
+            PlayerDir = GameManager.Instance.Player1.InputVec;
+        else
+            PlayerDir = GameManager.Instance.Player2.InputVec;
         switch (transform.tag)
         {
             case "Map":
