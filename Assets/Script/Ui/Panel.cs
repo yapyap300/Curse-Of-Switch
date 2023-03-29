@@ -211,6 +211,6 @@ public class Panel : MonoBehaviour
         GameManager.Instance.levelPanels[0].SetActive(false);
         GameManager.Instance.levelPanels[1].SetActive(false);
         GameManager.Instance.levelPanels[2].SetActive(false);
-        Time.timeScale = 1;
+        GameManager.Instance.Resume();
     }
 }

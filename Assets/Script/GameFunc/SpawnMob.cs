@@ -1,17 +1,21 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SpawnMob : MonoBehaviour
 {
     [SerializeField] Transform[] spawnPosition;
     public SpawnData[] spawnDatas;
-    int level = 0;
-    [SerializeField] bool second;
-    bool upgrade = false;
+    [SerializeField] Transform[] ground;
+    [SerializeField] int level;
+    [SerializeField] int eventCount;
+    [SerializeField] bool second;//player 1의 스포너인지 2의 스포너인지 구분
+    [SerializeField] int[] nextMonster;//몬스터 바꾸기
+    bool drakness;
 
     void Awake()
     {
-        spawnPosition= GetComponentsInChildren<Transform>();
+        spawnPosition= GetComponentsInChildren<Transform>();        
     }
     void Start()
     {
@@ -19,24 +23,20 @@ public class SpawnMob : MonoBehaviour
     }
     void Update()
     {
-        if (!upgrade && GameManager.Instance.gameTime >= 15f * 60f)
-            UpgradeStage();
-        if(GameManager.Instance.gameTime < 15f * 60f)
-            level = Mathf.Min(Mathf.FloorToInt(GameManager.Instance.gameTime / (15f * 60f)), spawnDatas.Length);
-        else
-            level = Mathf.Min(Mathf.FloorToInt((GameManager.Instance.gameTime - 15f * 60f) / (15f * 60f)), spawnDatas.Length);
-    }
-
-    void UpgradeStage()
-    {
-        upgrade = true;
-        foreach(SpawnData data in spawnDatas)
+        if (GameManager.Instance.isStop)
+            return;
+        if (!drakness && level > 4)
         {
-            data.health *= 2;
-            data.speed *= 1.5f;
-            data.spawnTime *= 0.7f;
+            drakness = true;
+            foreach(Transform t in ground)
+            {
+                t.GetComponent<Tilemap>().color = new Color(1f, 0.3f, 0.4f);                
+            }
         }
+        if (GameManager.Instance.gameTime >= nextMonster[level])
+            level++;        
     }
+    
 
     public void StatUp(int randomStat)//스폰시간은 건들기에는 너무 난이도에 예민한 수치라서 안 건들이기로 했다. delegate를 이용하기위해 스탯업의 형태를 통일함
     {        

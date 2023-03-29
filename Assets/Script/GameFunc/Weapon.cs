@@ -15,7 +15,6 @@ public class Weapon : MonoBehaviour
     Rigidbody2D target;//유도무기에 사용될 타겟
     Vector3 targetPos;//폭발무기에 쓸 랜덤타겟위치
 
-    [SerializeField]Player master;
     void Awake()
     {
         col = GetComponent<Collider2D>();
@@ -54,7 +53,9 @@ public class Weapon : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(id == 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.Player1.transform.position))
+        if (GameManager.Instance.isStop)
+            return;
+        if (id == 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.Player1.transform.position))
         {
             rigid.velocity = Vector2.zero;
             gameObject.SetActive(false);

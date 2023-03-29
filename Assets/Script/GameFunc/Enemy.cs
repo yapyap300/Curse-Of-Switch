@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float health;
     [SerializeField] float speed;
     [SerializeField] float maxHealth;
+    [SerializeField] int dropExp;
     public RuntimeAnimatorController[] controller;
     [SerializeField] Rigidbody2D target;
 
@@ -30,6 +31,8 @@ public class Enemy : MonoBehaviour
     }    
     void FixedUpdate()// 플레이어 추적
     {
+        if (GameManager.Instance.isStop)
+            return;
         if (!isLive || animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             return;
         Vector2 dir = target.position - rigid.position;
@@ -54,14 +57,21 @@ public class Enemy : MonoBehaviour
     }
     public void Init(SpawnData data,bool second)//몬스터 프리펩을 하나만 두고 스탯과 겉모습만 난이도에 맞춰 초기화해준다.
     {
-        if(second)
+        if (second)
+        {
+            transform.GetComponent<RePosition>().id = 2;
             target = GameManager.Instance.Player2.GetComponent<Rigidbody2D>();
+        }
         else
+        {
+            transform.GetComponent<RePosition>().id = 1;
             target = GameManager.Instance.Player1.GetComponent<Rigidbody2D>();
+        }
         animator.runtimeAnimatorController = controller[data.spriteType];
         speed = data.speed;
         health = data.health;
         maxHealth = data.health;
+        dropExp = data.exp;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -83,14 +93,9 @@ public class Enemy : MonoBehaviour
             rigid.simulated = false;
             animator.SetBool("Dead",true);
             spriter.sortingOrder = 1;
-            GameManager.Instance.GetExp();
+            GameManager.Instance.GetExp(dropExp);
         }
-    }
-    void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-            GameManager.Instance.Player1.TakeDamage();
-    }
+    }    
     IEnumerator KnockBack()
     {
         yield return wait;

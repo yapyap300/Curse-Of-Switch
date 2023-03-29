@@ -12,6 +12,7 @@ public class StartTextControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1.0f;
         Title.DOFade(1,8.45f);
         Next.DOFade(0.45f,2f).SetLoops(-1, LoopType.Yoyo);
     }

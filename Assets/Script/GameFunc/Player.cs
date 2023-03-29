@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     Rigidbody2D rigid;
-    Collider2D col;
     SpriteRenderer spriter;
     Animator anim;
     public Vector2 InputVec;
@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         scanner = GetComponent<Scanner>();
@@ -32,6 +31,8 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.isStop)
+            return;
         Vector2 NextVec = MoveSpeed * Time.fixedDeltaTime * InputVec;
         rigid.MovePosition(rigid.position + NextVec);
         rigid.velocity = Vector2.zero;
@@ -40,9 +41,26 @@ public class Player : MonoBehaviour
     {
         anim.SetFloat("Speed",InputVec.magnitude);
 
+        if (GameManager.Instance.isStop)
+            return;
         if(InputVec.x != 0)
         {
             spriter.flipX= InputVec.x < 0;
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        health -= Time.deltaTime * (10 - armor);
+
+        if (health < 0)
+        {
+            for (int index = 2; index < transform.childCount; index++)
+            {
+                transform.GetChild(index).gameObject.SetActive(false);
+            }
+            anim.SetTrigger("Dead");
+            GameManager.Instance.GameOver();
         }
     }
     public void TakeDamage()

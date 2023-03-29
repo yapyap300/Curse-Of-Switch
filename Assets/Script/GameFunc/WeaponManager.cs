@@ -46,8 +46,8 @@ public class WeaponManager : MonoBehaviour
     }
     void Update()//첫번째 근거리 무기만 계속 일정하게 돌면되기때문에 여기서 동작
     {
-        if (level == maxLevel)
-            isMax = true;
+        if (GameManager.Instance.isStop)
+            return;
         if (id == 0)
             transform.Rotate(speed * Time.deltaTime * Vector3.back);
     }
@@ -84,6 +84,8 @@ public class WeaponManager : MonoBehaviour
         }
         if (level == 1)//무기를 처음 활성화 할때 스탯 증가를 먼저하지 않으면 코루틴의 반복 주기를 계산할때 count를 가지고 계산하는 무기들이 count를 0으로 계산해서 오류를 띄움        
             gameObject.SetActive(true);
+        if (level == maxLevel)
+            isMax = true;
     }
     public void LevelDown()
     {
@@ -170,8 +172,8 @@ public class WeaponManager : MonoBehaviour
             weapon.localRotation = Quaternion.identity;
             Vector3 rotVec = 360 * index * Vector3.forward / count;
             weapon.Rotate(rotVec);
-            weapon.Translate(weapon.up * 6f,Space.World);
-            weapon.GetComponent<Weapon>().Init(damage + plusDamage,-1,Vector3.zero,id);// -1은 근접무기는 무조건 관통하게 하려고 한것
+            weapon.Translate(weapon.up * 5f,Space.World);
+            weapon.GetComponent<Weapon>().Init(damage + plusDamage * level,-1,Vector3.zero,id);// -1은 근접무기는 무조건 관통하게 하려고 한것
         }
     }
     IEnumerator Stap()//공격속도에 따라 캐릭터가 진행하는 방향으로 무기를 찌르는 메서드 가만히 서있으면 오른쪽을 찌름
@@ -188,7 +190,7 @@ public class WeaponManager : MonoBehaviour
             if (rotVec.magnitude == 0)
                 rotVec = Vector2.right;
             transform.rotation = Quaternion.LookRotation(Vector3.forward,rotVec);//무기 프리펩이아니라 프리펩의 부모인 관리오브젝트 자체가 돌아야함         
-            weapon.GetComponent<Weapon>().Init(damage + plusDamage, -1, Vector3.zero,id);        
+            weapon.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, Vector3.zero,id);        
         }
 
     }
@@ -204,7 +206,7 @@ public class WeaponManager : MonoBehaviour
                 Vector3 rotVec = new(0f,0f,Random.Range(-45f,45f));
                 weapon.Translate(weapon.up * 1.5f, Space.World);
                 weapon.Rotate(rotVec);
-                weapon.GetComponent<Weapon>().Init(damage + plusDamage, -1, Vector3.zero,id);
+                weapon.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, Vector3.zero,id);
                 
             }            
         }
@@ -213,6 +215,7 @@ public class WeaponManager : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(speed / level);
             if (player.scanner.nearTarget != null)
             {
                 Vector3 targetPos = player.scanner.nearTarget.position;
@@ -222,26 +225,24 @@ public class WeaponManager : MonoBehaviour
                 Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
                 
                 bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));                
-                bullet.GetComponent<Weapon>().Init(damage + plusDamage, count, dir,id);                
-            }
-
-            yield return new WaitForSeconds(speed / level);
+                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, count, dir,id);                
+            }            
         }
     }
     IEnumerator Boom()//폭발 무기는 일정간격으로 적이 있든 없든 랜덤한 목표위치로 화염구를 날리고 그자리에서 폭발할때 데미지를 준다.
     {
         while (true)
-        {            
-            Vector3 targetPos = transform.position + new Vector3(Random.Range(-11f,11f), Random.Range(-5f, 5f), 0f);
+        {
+            yield return new WaitForSeconds(speed / level);
+            Vector3 targetPos = transform.position + new Vector3(Random.Range(-5f,5f), Random.Range(-7f, 7f), 0f);
             Vector3 dir = targetPos - transform.position;
             dir = dir.normalized;
 
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
             
-            bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));            
-            bullet.GetComponent<Weapon>().Init(damage + plusDamage, -1, targetPos, id);//폭발무기는 적이랑 부딫여서 데미지를 주지않음
-
-            yield return new WaitForSeconds(speed / level);
+            bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));           
+            bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);//폭발무기는 적이랑 부딫여서 데미지를 주지않음
+            
         }
     }
 }

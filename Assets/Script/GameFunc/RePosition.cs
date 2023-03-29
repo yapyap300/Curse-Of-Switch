@@ -5,7 +5,7 @@ using UnityEngine;
 public class RePosition : MonoBehaviour
 {
     Collider2D coll;
-    [SerializeField] int id;
+    public int id;
 
     void Awake()
     {
