@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public bool isStop;
     public float gameTime;
     public float maxTime;
+    public int[] curseTime;
     [Header("# Level Control")]
     public GameObject[] levelPanels;
     public GameObject[] weaponList;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         Instance= this;
         maxTime = 30f * 60f;
-        for(int i = 5; i<nextExp.Length; i++)
+        for(int i = 1; i<nextExp.Length; i++)
         {
             nextExp[i] = Mathf.FloorToInt((float)(nextExp[i-1] * 1.2));
         }

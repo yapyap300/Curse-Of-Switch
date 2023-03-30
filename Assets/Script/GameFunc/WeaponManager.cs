@@ -44,6 +44,7 @@ public class WeaponManager : MonoBehaviour
                 break;
         }
     }
+    
     void Update()//첫번째 근거리 무기만 계속 일정하게 돌면되기때문에 여기서 동작
     {
         if (GameManager.Instance.isStop)
@@ -61,25 +62,30 @@ public class WeaponManager : MonoBehaviour
             case 0:
                 damage += 5;
                 count += 2;
+                speed += 20;
                 Stack();
                 break;
             case 1:
                 damage += 10;
-                count++;
+                speed -= 1.0f;
                 break;
             case 2:
-                damage += 25;
+                damage += 15;
                 count++;
+                speed -= 2.0f;
                 break;
             case 3:
                 damage += 3;
                 count++;
+                speed -= 0.25f;
                 break;
             case 4://유도무기는 관통이 증가하지 않는 대신 데미지가 2배증가
                 damage += 3 * 2;
+                speed -= 0.2f;
                 break;
             case 5:
                 damage += 20;
+                speed -= 1.75f;
                 break;
         }
         if (level == 1)//무기를 처음 활성화 할때 스탯 증가를 먼저하지 않으면 코루틴의 반복 주기를 계산할때 count를 가지고 계산하는 무기들이 count를 0으로 계산해서 오류를 띄움        
@@ -97,25 +103,30 @@ public class WeaponManager : MonoBehaviour
             case 0:
                 damage -= 5;
                 count -= 2;
+                speed -= 20;
                 Stack();
                 break;
             case 1:
                 damage -= 10;
-                count++;
+                speed += 1.0f;
                 break;
             case 2:
-                damage -= 25;
-                count++;
+                damage -= 15;
+                speed += 2.0f;
+                count--;
                 break;
             case 3:
                 damage -= 3;
-                count++;
+                speed += 0.25f;
+                count--;
                 break;
             case 4://유도무기는 관통이 증가하지 않는 대신 데미지가 2배증가
                 damage -= 3 * 2;
+                speed += 0.2f;
                 break;
             case 5:
                 damage -= 20;
+                speed += 1.75f;
                 break;
         }
         if(level == 0)
@@ -126,22 +137,22 @@ public class WeaponManager : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 100;                
+                speed = 80;                
                 break;
             case 1:
-                speed = 5f;
+                speed = 6f;
                 break;
             case 2:
-                speed = 10f;
+                speed = 12f;
                 break;
             case 3:
-                speed = 1f;
+                speed = 1.75f;
                 break;
             case 4:
-                speed = 0.5f;
+                speed = 1.2f;
                 break;
             case 5:
-                speed = 8f;
+                speed = 9.75f;
                 break;
         }
     }
@@ -180,7 +191,7 @@ public class WeaponManager : MonoBehaviour
     {        
         while (true)
         {
-            yield return new WaitForSeconds(speed / count);
+            yield return new WaitForSeconds(speed);
             Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
             if (weapon.parent != transform)
                 weapon.parent = transform;
@@ -198,7 +209,7 @@ public class WeaponManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(speed / level);
+            yield return new WaitForSeconds(speed);
             for (int index = 0; index < count; index++)
             {
                 Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
@@ -215,7 +226,7 @@ public class WeaponManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(speed / level);
+            yield return new WaitForSeconds(speed);
             if (player.scanner.nearTarget != null)
             {
                 Vector3 targetPos = player.scanner.nearTarget.position;
@@ -233,7 +244,7 @@ public class WeaponManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(speed / level);
+            yield return new WaitForSeconds(speed);
             Vector3 targetPos = transform.position + new Vector3(Random.Range(-5f,5f), Random.Range(-7f, 7f), 0f);
             Vector3 dir = targetPos - transform.position;
             dir = dir.normalized;

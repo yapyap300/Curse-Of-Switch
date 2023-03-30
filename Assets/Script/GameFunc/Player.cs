@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
                 break;
             case 2:
                 maxHealth += 20;
+                Heal();
                 break;
             case 3:                
                 for(int i = 0; i < myWeapon.Length; i++)
