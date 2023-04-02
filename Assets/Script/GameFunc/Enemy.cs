@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -60,12 +59,12 @@ public class Enemy : MonoBehaviour
         if (second)
         {
             transform.GetComponent<RePosition>().id = 2;
-            target = GameManager.Instance.Player2.GetComponent<Rigidbody2D>();
+            target = GameManager.Instance.player2.GetComponent<Rigidbody2D>();
         }
         else
         {
             transform.GetComponent<RePosition>().id = 1;
-            target = GameManager.Instance.Player1.GetComponent<Rigidbody2D>();
+            target = GameManager.Instance.player1.GetComponent<Rigidbody2D>();
         }
         animator.runtimeAnimatorController = controller[data.spriteType];
         speed = data.speed;
@@ -99,12 +98,17 @@ public class Enemy : MonoBehaviour
     IEnumerator KnockBack()
     {
         yield return wait;
-        Vector3 playerPos = GameManager.Instance.Player1.transform.position;
+        Vector3 playerPos = GameManager.Instance.player1.transform.position;
         Vector3 dir = transform.position- playerPos;
         rigid.AddForce(dir.normalized * 3,ForceMode2D.Impulse);
     }
     void Dead()
-    {
+    {        
         gameObject.SetActive(false);
+        if (Random.Range(0, 100) < 1)
+        {
+            Transform potion = GameManager.Instance.pool.Get(7).transform;
+            potion.position = transform.position;
+        }
     }
 }

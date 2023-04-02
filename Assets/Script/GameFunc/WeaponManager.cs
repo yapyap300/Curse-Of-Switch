@@ -62,30 +62,29 @@ public class WeaponManager : MonoBehaviour
             case 0:
                 damage += 5;
                 count += 2;
-                speed += 20;
+                speed += 10;
                 Stack();
                 break;
             case 1:
                 damage += 10;
-                speed -= 1.0f;
                 break;
             case 2:
                 damage += 15;
                 count++;
-                speed -= 2.0f;
+                speed -= 1f;
                 break;
             case 3:
                 damage += 3;
                 count++;
-                speed -= 0.25f;
+                speed -= 0.1f;
                 break;
             case 4://유도무기는 관통이 증가하지 않는 대신 데미지가 2배증가
                 damage += 3 * 2;
-                speed -= 0.2f;
+                speed -= 0.1f;
                 break;
             case 5:
                 damage += 20;
-                speed -= 1.75f;
+                speed -= 1f;
                 break;
         }
         if (level == 1)//무기를 처음 활성화 할때 스탯 증가를 먼저하지 않으면 코루틴의 반복 주기를 계산할때 count를 가지고 계산하는 무기들이 count를 0으로 계산해서 오류를 띄움        
@@ -103,30 +102,29 @@ public class WeaponManager : MonoBehaviour
             case 0:
                 damage -= 5;
                 count -= 2;
-                speed -= 20;
+                speed -= 10;
                 Stack();
                 break;
             case 1:
                 damage -= 10;
-                speed += 1.0f;
                 break;
             case 2:
                 damage -= 15;
-                speed += 2.0f;
+                speed += 1f;
                 count--;
                 break;
             case 3:
                 damage -= 3;
-                speed += 0.25f;
+                speed += 0.1f;
                 count--;
                 break;
             case 4://유도무기는 관통이 증가하지 않는 대신 데미지가 2배증가
                 damage -= 3 * 2;
-                speed += 0.2f;
+                speed += 0.1f;
                 break;
             case 5:
                 damage -= 20;
-                speed += 1.75f;
+                speed += 1f;
                 break;
         }
         if(level == 0)
@@ -137,22 +135,22 @@ public class WeaponManager : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 80;                
+                speed = 90;                
                 break;
             case 1:
-                speed = 6f;
+                speed = 1f;
                 break;
             case 2:
-                speed = 12f;
+                speed = 11f;
                 break;
             case 3:
-                speed = 1.75f;
-                break;
-            case 4:
                 speed = 1.2f;
                 break;
+            case 4:
+                speed = 1.1f;
+                break;
             case 5:
-                speed = 9.75f;
+                speed = 11f;
                 break;
         }
     }
@@ -197,7 +195,7 @@ public class WeaponManager : MonoBehaviour
                 weapon.parent = transform;
             weapon.localPosition = Vector3.zero;
             weapon.localRotation = Quaternion.identity;
-            Vector2 rotVec = GameManager.Instance.Player1.InputVec;
+            Vector2 rotVec = GameManager.Instance.player1.InputVec;
             if (rotVec.magnitude == 0)
                 rotVec = Vector2.right;
             transform.rotation = Quaternion.LookRotation(Vector3.forward,rotVec);//무기 프리펩이아니라 프리펩의 부모인 관리오브젝트 자체가 돌아야함         
@@ -209,7 +207,7 @@ public class WeaponManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(speed);
+            yield return new WaitForSeconds(1f);
             for (int index = 0; index < count; index++)
             {
                 Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
@@ -218,7 +216,7 @@ public class WeaponManager : MonoBehaviour
                 weapon.Translate(weapon.up * 1.5f, Space.World);
                 weapon.Rotate(rotVec);
                 weapon.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, Vector3.zero,id);
-                
+                yield return new WaitForSeconds(speed/count);
             }            
         }
     }

@@ -7,6 +7,6 @@ public class Player2 : Player
 {
     void OnMove2(InputValue Value)//Player1¿ë
     {
-        InputVec = Value.Get<Vector2>();
+        InputVec = Value.Get<Vector2>();        
     }
 }

@@ -17,9 +17,9 @@ public class RePosition : MonoBehaviour
             return;
         Vector3 PlayerPos;
         if(id == 1)
-            PlayerPos = GameManager.Instance.Player1.transform.position;
+            PlayerPos = GameManager.Instance.player1.transform.position;
         else
-            PlayerPos = GameManager.Instance.Player2.transform.position;
+            PlayerPos = GameManager.Instance.player2.transform.position;
         Vector3 MyPos = transform.position;
 
         float dirX = PlayerPos.x - MyPos.x;
@@ -31,12 +31,12 @@ public class RePosition : MonoBehaviour
         dirX = dirX < 0 ? -1 : 1;
         dirY = dirY < 0 ? -1 : 1;
 
-        Vector3 PlayerDir = GameManager.Instance.Player1.InputVec;
+        Vector3 PlayerDir = GameManager.Instance.player1.InputVec;
 
         if (id == 1)
-            PlayerDir = GameManager.Instance.Player1.InputVec;
+            PlayerDir = GameManager.Instance.player1.InputVec;
         else
-            PlayerDir = GameManager.Instance.Player2.InputVec;
+            PlayerDir = GameManager.Instance.player2.InputVec;
         switch (transform.tag)
         {
             case "Map":

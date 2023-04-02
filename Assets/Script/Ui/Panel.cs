@@ -39,8 +39,8 @@ public class Panel : MonoBehaviour
                         level.text = "";//사용안함
                         effect.text = "회복";
 
-                        panel += GameManager.Instance.Player1.Heal;
-                        panel += GameManager.Instance.Player2.Heal;
+                        panel += GameManager.Instance.player1.Heal;
+                        panel += GameManager.Instance.player2.Heal;
                     }
                     else
                     {
@@ -67,7 +67,7 @@ public class Panel : MonoBehaviour
                     int count = 0;
                     for (int index = 0; index < 4; index++)
                     {
-                        if (GameManager.Instance.Player1.statScore[index] == GameManager.Instance.maxStateLevel)
+                        if (GameManager.Instance.player1.statScore[index] == GameManager.Instance.maxStateLevel)
                             count++;
                     }
                     Image select = transform.Find("Image").GetComponent<Image>();
@@ -83,27 +83,27 @@ public class Panel : MonoBehaviour
                         level.text = "";//사용안함
                         effect.text = "회복";
 
-                        panel += GameManager.Instance.Player1.Heal;
-                        panel += GameManager.Instance.Player2.Heal;
+                        panel += GameManager.Instance.player1.Heal;
+                        panel += GameManager.Instance.player2.Heal;
                     }
                     else
                     {
                         int randomSelect = Random.Range(0, 4);
 
-                        while (GameManager.Instance.Player1.statScore[randomSelect] == GameManager.Instance.maxStateLevel)//레벨이 이미 max인 스탯은 업그레이드 할 수 없다. 
+                        while (GameManager.Instance.player1.statScore[randomSelect] == GameManager.Instance.maxStateLevel)//레벨이 이미 max인 스탯은 업그레이드 할 수 없다. 
                         {
                             randomSelect = Random.Range(0, 4);
                         }
                         select.sprite = GameManager.Instance.selectUI.stat[randomSelect];
 
                         name.text = GameManager.Instance.selectUI.statName[randomSelect];
-                        level.text = $"레벨:{(GameManager.Instance.Player1.statScore[randomSelect] + 1 == 5 ? "Max" : GameManager.Instance.Player1.statScore[randomSelect] + 1)}";
+                        level.text = $"레벨:{(GameManager.Instance.player1.statScore[randomSelect] + 1 == 5 ? "Max" : GameManager.Instance.player1.statScore[randomSelect] + 1)}";
                         effect.text = $"{GameManager.Instance.selectUI.statName[randomSelect]}+";
 
                         panel += () =>
                         {
-                            GameManager.Instance.Player1.StatUp(randomSelect);
-                            GameManager.Instance.Player2.StatUp(randomSelect);
+                            GameManager.Instance.player1.StatUp(randomSelect);
+                            GameManager.Instance.player2.StatUp(randomSelect);
                         };
                     }
                     gameObject.SetActive(true);
@@ -149,9 +149,9 @@ public class Panel : MonoBehaviour
                                     select2.sprite = GameManager.Instance.selectUI.player[1];
                                     panel += () =>
                                     {
-                                        GameManager.Instance.Player1.StatUp(random);
-                                        GameManager.Instance.Player1.StatUp(random);
-                                        GameManager.Instance.Player2.StatDown(random);
+                                        GameManager.Instance.player1.StatUp(random);
+                                        GameManager.Instance.player1.StatUp(random);
+                                        GameManager.Instance.player2.StatDown(random);
                                     };
                                 }
                                 else
@@ -160,9 +160,9 @@ public class Panel : MonoBehaviour
                                     select2.sprite = GameManager.Instance.selectUI.player[0];
                                     panel += () =>
                                     {
-                                        GameManager.Instance.Player2.StatUp(random);
-                                        GameManager.Instance.Player2.StatUp(random);
-                                        GameManager.Instance.Player1.StatDown(random);
+                                        GameManager.Instance.player2.StatUp(random);
+                                        GameManager.Instance.player2.StatUp(random);
+                                        GameManager.Instance.player1.StatDown(random);
                                     };
                                 }
                                 effect.text = GameManager.Instance.selectUI.riskDetails[1];
@@ -180,8 +180,8 @@ public class Panel : MonoBehaviour
                                 {
                                     panel += () =>
                                     {
-                                        GameManager.Instance.Player1.StatUp(random);
-                                        GameManager.Instance.Player1.StatUp(random);
+                                        GameManager.Instance.player1.StatUp(random);
+                                        GameManager.Instance.player1.StatUp(random);
                                         GameManager.Instance.EnemyControl[0].StatUp(randomMonsterStat);
                                         GameManager.Instance.EnemyControl[1].StatUp(randomMonsterStat);
                                     };
@@ -190,8 +190,8 @@ public class Panel : MonoBehaviour
                                 {
                                     panel += () =>
                                     {
-                                        GameManager.Instance.Player2.StatUp(random);
-                                        GameManager.Instance.Player2.StatUp(random);
+                                        GameManager.Instance.player2.StatUp(random);
+                                        GameManager.Instance.player2.StatUp(random);
                                         GameManager.Instance.EnemyControl[0].StatUp(randomMonsterStat);
                                         GameManager.Instance.EnemyControl[1].StatUp(randomMonsterStat);
                                     };

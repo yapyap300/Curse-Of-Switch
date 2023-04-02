@@ -34,15 +34,15 @@ public class Weapon : MonoBehaviour
                 animator.SetTrigger("onEnable");
                 break;
             case 2:                
-                rigid.AddForce(transform.up * 750f, ForceMode2D.Impulse);
-                rigid.AddTorque(850f);
+                rigid.AddForce(transform.up * 550f, ForceMode2D.Impulse);
+                rigid.AddTorque(750f);
                 break;
             case 3:
                 rigid.velocity = dir * 10f;
                 break;
             case 4:
                 isTrack = true;
-                target = GameManager.Instance.Player2.scanner.nearTarget.GetComponent<Rigidbody2D>();
+                target = GameManager.Instance.player2.scanner.nearTarget.GetComponent<Rigidbody2D>();
                 break;
             case 5:
                 col.enabled = false;
@@ -55,12 +55,12 @@ public class Weapon : MonoBehaviour
     {
         if (GameManager.Instance.isStop)
             return;
-        if (id == 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.Player1.transform.position))
+        if (id == 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.player1.transform.position))
         {
             rigid.velocity = Vector2.zero;
             gameObject.SetActive(false);
         }
-        else if (id > 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.Player2.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
+        else if (id > 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.player2.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
         {
             rigid.velocity = Vector2.zero;
             gameObject.SetActive(false);

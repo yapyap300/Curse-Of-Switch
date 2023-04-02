@@ -6,10 +6,16 @@ using UnityEngine.UI;
 
 public class Curse : MonoBehaviour
 {
-    Color myColor = new(0.8f, 0.1f, 0.1f);
+    Color warningColor = new(0.8f, 0.1f, 0.1f);
+    Color endColor = new(0f,0.45f,1f);
     [SerializeField] Image curse;
-    public void CurseRutine()
+    public void CurseAlarm()
     {
-        curse.DOColor(myColor,4.7f).SetEase(Ease.Flash,36,-1);
-    }    
+        curse.DOColor(warningColor, 4.7f).SetEase(Ease.Flash,36,-1);
+    }
+    
+    public void EndAlarm()
+    {
+        curse.DOColor(endColor, 4.7f).SetEase(Ease.Flash, 36, -1);
+    }
 }
