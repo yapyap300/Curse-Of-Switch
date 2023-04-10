@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {   
@@ -15,10 +15,10 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player player1;
     public Player player2;
-    public SpawnMob[] EnemyControl;
+    public SpawnMob[] enemyControl;
     public PoolsManager pool;
     public Curse curseState;
-    public GameObject uiEnd;
+    public GameObject[] uiEnd;
     [Header("# Player Level Info")]
     public int level;
     public int maxLevel;    
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public int[] nextExp;
     [Header("# Game Control")]
     public bool isStop;
+    public bool isCurse;
+    public bool isEnd;
     public float gameTime;
     public float maxTime;
     public int[] curseTime;
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] levelPanels;
     public GameObject[] weaponList;
 
-    WaitForSeconds curseAlarm = new WaitForSeconds(5f);
+    readonly WaitForSeconds curseAlarm = new(5f);
 
     void Awake()
     {
@@ -52,18 +54,41 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.Instance.isStop)
+        if (isStop || isEnd)
             return;
         gameTime += Time.deltaTime;
-        if (gameTime >= curseTime[curseIndex])
+        if (curseIndex != curseTime.Length && gameTime >= curseTime[curseIndex])
         {
             StartCoroutine(CurseStrart());
             curseIndex++;
+            isCurse = true;
         }
-        if(gameTime > maxTime)//엔딩씬으로 넘어가도록 할 예정
+        if(gameTime > maxTime)
         {
-            gameTime = maxTime;
+            if (player1.hitCount + player2.hitCount <= 20)// 저주상태일때 받은 히트수와 해골패턴의 히트수를 조건으로 한다.
+            {
+                StartCoroutine(HiddenEnd());
+                //히든 엔딩인 보스전
+            }
+            StartCoroutine(GameEnd());
         }
+    }
+    IEnumerator GameEnd()//조건에 맞지 않으면 그냥 일반 엔딩연출
+    {
+        isEnd = true;
+        uiEnd[1].SetActive(true);
+        yield return curseAlarm;
+        player1.EndingChangeState();
+        player2.EndingChangeState();
+    }
+    IEnumerator HiddenEnd()//히든 보스전에 들어갈때 할 연출
+    {
+        isStop = true;
+        uiEnd[2].SetActive(true);
+        yield return new WaitForSeconds(8f);
+        uiEnd[3].SetActive(true);
+        yield return new WaitForSeconds(6f);
+        SceneManager.LoadScene(2);
     }
     public void GameOver()
     {
@@ -75,7 +100,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        uiEnd.SetActive(true);
+        uiEnd[0].SetActive(true);
         Stop();
     }
     public void GameRestart()
@@ -128,13 +153,14 @@ public class GameManager : MonoBehaviour
         yield return curseAlarm;
         player1.ChangeKey("MainPlayer");
         player2.ChangeKey("MainPlayer");
+        isCurse = false;
     }
     IEnumerator AutoExp()
     {
         while (true)
         {
-            GetExp(1);
             yield return new WaitForSeconds(1f);
+            GetExp(1);            
         }
     }
 }

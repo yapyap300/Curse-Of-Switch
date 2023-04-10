@@ -5,7 +5,6 @@ using UnityEngine;
 public class PoolsManager : MonoBehaviour
 {
     public GameObject[] prefabs;
-
     List<GameObject>[] pools;
 
     void Awake()

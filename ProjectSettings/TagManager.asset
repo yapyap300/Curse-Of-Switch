@@ -8,8 +8,7 @@ TagManager:
   - Area
   - Enemy
   - Weapon
-  - Player1
-  - Player2
+  - Skull
   layers:
   - Default
   - TransparentFX
@@ -20,7 +19,7 @@ TagManager:
   - Enemy
   - Player1
   - Player2
-  - 
+  - Skull
   - 
   - 
   - 

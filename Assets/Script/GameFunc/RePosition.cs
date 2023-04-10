@@ -31,7 +31,7 @@ public class RePosition : MonoBehaviour
         dirX = dirX < 0 ? -1 : 1;
         dirY = dirY < 0 ? -1 : 1;
 
-        Vector3 PlayerDir = GameManager.Instance.player1.InputVec;
+        Vector3 PlayerDir;
 
         if (id == 1)
             PlayerDir = GameManager.Instance.player1.InputVec;
@@ -42,11 +42,11 @@ public class RePosition : MonoBehaviour
             case "Map":
                 if(diffX > diffY)
                 {
-                    transform.Translate(Vector3.right * dirX * 60);
+                    transform.Translate(60 * dirX * Vector3.right);
                 }
                 else if(diffX < diffY)
                 {
-                    transform.Translate(Vector3.up * dirY * 60);
+                    transform.Translate(60 * dirY * Vector3.up);
                 }
                 else
                 {
@@ -56,7 +56,7 @@ public class RePosition : MonoBehaviour
             case "Enemy":
                 if(coll.enabled)
                 {
-                    transform.Translate(PlayerDir * 30 + new Vector3(Random.Range(-3f,3f), Random.Range(-5f, 5f),0f));
+                    transform.Translate(PlayerDir * 30 + new Vector3(Random.Range(-2f,2f), Random.Range(-2f, 2f),0f));
                 }
                 break;
         }

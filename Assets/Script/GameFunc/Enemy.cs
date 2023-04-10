@@ -100,12 +100,12 @@ public class Enemy : MonoBehaviour
         yield return wait;
         Vector3 playerPos = GameManager.Instance.player1.transform.position;
         Vector3 dir = transform.position- playerPos;
-        rigid.AddForce(dir.normalized * 3,ForceMode2D.Impulse);
+        rigid.AddForce(dir.normalized * 2,ForceMode2D.Impulse);
     }
     void Dead()
     {        
         gameObject.SetActive(false);
-        if (Random.Range(0, 100) < 1)
+        if (Random.Range(0, 1000) < 1)
         {
             Transform potion = GameManager.Instance.pool.Get(7).transform;
             potion.position = transform.position;

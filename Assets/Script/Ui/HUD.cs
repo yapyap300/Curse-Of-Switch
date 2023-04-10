@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour
                 myText.text = $"Lv.{GameManager.Instance.level:F0}"; 
                 break;
             case InfoType.Time:
-                float remainTime = GameManager.Instance.maxTime - GameManager.Instance.gameTime;
+                float remainTime = GameManager.Instance.gameTime;
                 int min = Mathf.FloorToInt(remainTime / 60);
                 int sec = Mathf.FloorToInt(remainTime % 60);
                 myText.text = $"{min:D2}:{sec:D2}";

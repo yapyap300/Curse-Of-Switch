@@ -10,7 +10,7 @@ public class SpawnMob : MonoBehaviour
     [SerializeField] int level;
     [SerializeField] int eventCount;
     [SerializeField] bool second;//player 1의 스포너인지 2의 스포너인지 구분
-    [SerializeField] int[] nextMonster;//몬스터 바꾸기
+    [SerializeField] int[] nextMonster;//다음 레벨의 몬스터소환 시간
     bool drakness;
 
     void Awake()
@@ -33,7 +33,7 @@ public class SpawnMob : MonoBehaviour
                 t.GetComponent<Tilemap>().color = new Color(1f, 0.3f, 0.4f);                
             }
         }
-        if (GameManager.Instance.gameTime >= nextMonster[level])
+        if (level != nextMonster.Length && GameManager.Instance.gameTime >= nextMonster[level])
             level++;        
     }
     
@@ -48,7 +48,7 @@ public class SpawnMob : MonoBehaviour
                     data.health += (int)(data.health / 10);
                     break;
                 case 1:
-                    data.speed += 0.2f;
+                    data.speed += 0.1f;
                     break;               
             }           
         }
@@ -62,7 +62,7 @@ public class SpawnMob : MonoBehaviour
             int ranPos = Random.Range(1, 5);
             if (ranPos == 1 || ranPos == 2)
             {
-                Vector3 ranSum = new(Random.Range(-15f, 15f), Random.Range(-1f, 1f), 0);
+                Vector3 ranSum = new(Random.Range(-10f, 10f), Random.Range(-1f, 1f), 0);
                 enemy.transform.position = spawnPosition[ranPos].position + ranSum;
             }
             else

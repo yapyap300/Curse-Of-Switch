@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,8 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField] float MoveSpeed;
     [SerializeField] float armor;    
     public int[] statScore;
-    
-    // Start is called before the first frame update
+    public float hitCount;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -56,17 +57,14 @@ public class Player : MonoBehaviour
     //{
     //    health -= Time.deltaTime * (10 - armor);
 
+    //    if (GameManager.Instance.isCurse)
+    //        hitCount += Time.deltaTime;
     //    if (health < 0)
     //    {
-    //        for (int index = 2; index < transform.childCount; index++)
-    //        {
-    //            transform.GetChild(index).gameObject.SetActive(false);
-    //        }
-    //        anim.SetTrigger("Dead");
-    //        GameManager.Instance.GameOver();
+    //        Dead();
     //    }
     //}
-
+    
     public void Heal()
     {
         health = maxHealth;
@@ -81,7 +79,7 @@ public class Player : MonoBehaviour
                 armor += 0.5f;                
                 break;
             case 1:
-                MoveSpeed += 0.3f;
+                MoveSpeed += 0.2f;
                 break;
             case 2:
                 maxHealth += 20;
@@ -103,10 +101,12 @@ public class Player : MonoBehaviour
                 armor -= 0.5f;
                 break;
             case 1:
-                MoveSpeed--;
+                MoveSpeed-= 0.2f;
                 break;
             case 2:
                 maxHealth -= 20;
+                if(health > maxHealth)
+                    health = maxHealth;
                 break;
             case 3:                
                 for (int i = 0; i < myWeapon.Length; i++)
@@ -118,8 +118,22 @@ public class Player : MonoBehaviour
     {
         myInput.SwitchCurrentActionMap(name);
     }
+    public void EndingChangeState()
+    {
+        spriter.DOColor(Color.black, 2f);
+        MoveSpeed = 0.5f;
+        for(int index = 0; index<myWeapon.Length; index++)
+        {
+            myWeapon[index].gameObject.SetActive(false);
+        }
+    }
     void Dead()//Á×´Â¾ÀÀ¸·Î ³Ñ±â±â
     {
-
-    }    
+        for (int index = 2; index < transform.childCount; index++)
+        {
+            transform.GetChild(index).gameObject.SetActive(false);
+        }
+        anim.SetTrigger("Dead");
+        GameManager.Instance.GameOver();
+    }
 }

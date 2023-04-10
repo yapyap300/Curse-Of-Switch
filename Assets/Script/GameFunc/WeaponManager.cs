@@ -75,7 +75,10 @@ public class WeaponManager : MonoBehaviour
                 break;
             case 3:
                 damage += 3;
-                count++;
+                if(level > 5)//기본 미사일은 관통이 5 이상이면 의미가 없는거 같아서 데미지가 더 올라가게 수정
+                    damage += 3;               
+                else
+                    count++;
                 speed -= 0.1f;
                 break;
             case 4://유도무기는 관통이 증가하지 않는 대신 데미지가 2배증가
@@ -95,14 +98,14 @@ public class WeaponManager : MonoBehaviour
     public void LevelDown()
     {
         if(level == 0) return;        
-        level--;
-        
+        level--;        
         switch (id)
         {
             case 0:
                 damage -= 5;
                 count -= 2;
                 speed -= 10;
+                StackInit();
                 Stack();
                 break;
             case 1:
@@ -116,9 +119,12 @@ public class WeaponManager : MonoBehaviour
             case 3:
                 damage -= 3;
                 speed += 0.1f;
-                count--;
+                if (level > 5)
+                    damage -= 3;
+                else
+                    count--;   
                 break;
-            case 4://유도무기는 관통이 증가하지 않는 대신 데미지가 2배증가
+            case 4:
                 damage -= 3 * 2;
                 speed += 0.1f;
                 break;
@@ -157,10 +163,20 @@ public class WeaponManager : MonoBehaviour
     public void PlusDamage()
     {
         plusDamage++;
+        if (id == 0)
+        {
+            StackInit();
+            Stack();
+        }
     }
     public void MinusDamage()
     {
         plusDamage--;
+        if (id == 0)
+        {
+            StackInit();
+            Stack();
+        }
     }
     void Stack()// 주변을 도는 근접 공격용 메서드
     {
@@ -176,13 +192,20 @@ public class WeaponManager : MonoBehaviour
                 weapon = GameManager.Instance.pool.Get(prefabId).transform;
                 weapon.parent = transform;
             }            
-            
+            weapon.gameObject.SetActive(true);
             weapon.localPosition = Vector3.zero;
             weapon.localRotation = Quaternion.identity;
             Vector3 rotVec = 360 * index * Vector3.forward / count;
             weapon.Rotate(rotVec);
             weapon.Translate(weapon.up * 5f,Space.World);
             weapon.GetComponent<Weapon>().Init(damage + plusDamage * level,-1,Vector3.zero,id);// -1은 근접무기는 무조건 관통하게 하려고 한것
+        }
+    }
+    void StackInit()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
         }
     }
     IEnumerator Stap()//공격속도에 따라 캐릭터가 진행하는 방향으로 무기를 찌르는 메서드 가만히 서있으면 오른쪽을 찌름
