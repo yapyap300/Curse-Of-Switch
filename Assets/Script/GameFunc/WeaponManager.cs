@@ -62,7 +62,7 @@ public class WeaponManager : MonoBehaviour
             case 0:
                 damage += 5;
                 count += 2;
-                speed += 10;
+                speed += 5;
                 Stack();
                 break;
             case 1:
@@ -90,7 +90,7 @@ public class WeaponManager : MonoBehaviour
                 speed -= 1f;
                 break;
         }
-        if (level == 1)//무기를 처음 활성화 할때 스탯 증가를 먼저하지 않으면 코루틴의 반복 주기를 계산할때 count를 가지고 계산하는 무기들이 count를 0으로 계산해서 오류를 띄움        
+        if (level == 1)       
             gameObject.SetActive(true);
         if (level == maxLevel)
             isMax = true;
@@ -208,7 +208,7 @@ public class WeaponManager : MonoBehaviour
             child.gameObject.SetActive(false);
         }
     }
-    IEnumerator Stap()//공격속도에 따라 캐릭터가 진행하는 방향으로 무기를 찌르는 메서드 가만히 서있으면 오른쪽을 찌름
+    IEnumerator Stap()//캐릭터가 진행하는 방향으로 무기를 찌르는 메서드 가만히 서있으면 오른쪽을 찌름
     {        
         while (true)
         {
@@ -239,6 +239,7 @@ public class WeaponManager : MonoBehaviour
                 weapon.Translate(weapon.up * 1.5f, Space.World);
                 weapon.Rotate(rotVec);
                 weapon.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, Vector3.zero,id);
+                SoundManager.instance.PlaySfx("Melee0");
                 yield return new WaitForSeconds(speed/count);
             }            
         }
@@ -257,7 +258,9 @@ public class WeaponManager : MonoBehaviour
                 Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
                 
                 bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));                
-                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, count, dir,id);                
+                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, count, dir,id);
+
+                SoundManager.instance.PlaySfx("Range");
             }            
         }
     }
@@ -273,7 +276,7 @@ public class WeaponManager : MonoBehaviour
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
             
             bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));           
-            bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);//폭발무기는 적이랑 부딫여서 데미지를 주지않음
+            bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);//폭발무기는 날아가는 동안 적이랑 부딫여서 데미지를 주지않음
             
         }
     }

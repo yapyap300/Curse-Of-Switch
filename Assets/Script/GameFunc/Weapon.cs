@@ -76,7 +76,7 @@ public class Weapon : MonoBehaviour
             return;
         per--;//원거리총알의 관통력감소
 
-        if (per == -1)
+        if (per < 0)
         {
             rigid.velocity = Vector2.zero;
             isTrack = false;
@@ -115,6 +115,7 @@ public class Weapon : MonoBehaviour
             rigid.velocity = Vector2.zero;
             col.enabled = true;
             animator.SetTrigger("Boom");
+            SoundManager.instance.PlaySfx("Boom");
         }
     }
 }

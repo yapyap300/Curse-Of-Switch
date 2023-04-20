@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class RePosition : MonoBehaviour
 {
@@ -56,7 +57,9 @@ public class RePosition : MonoBehaviour
             case "Enemy":
                 if(coll.enabled)
                 {
-                    transform.Translate(PlayerDir * 30 + new Vector3(Random.Range(-2f,2f), Random.Range(-2f, 2f),0f));
+                    Vector3 dist = PlayerPos - MyPos;
+                    Vector3 ran = new Vector3(Random.Range(-3, 3), Random.Range(-3, 3), 0);
+                    transform.Translate(ran + dist * 2);                    
                 }
                 break;
         }

@@ -63,8 +63,8 @@ public class Player : MonoBehaviour
     //    {
     //        Dead();
     //    }
-    //}
-    
+    //}    
+
     public void Heal()
     {
         health = maxHealth;
@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
             myWeapon[index].gameObject.SetActive(false);
         }
     }
-    void Dead()//Á×´Â¾ÀÀ¸·Î ³Ñ±â±â
+    void Dead()
     {
         for (int index = 2; index < transform.childCount; index++)
         {

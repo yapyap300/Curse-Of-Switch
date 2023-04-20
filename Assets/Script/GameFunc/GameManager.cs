@@ -50,7 +50,8 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(AutoExp());        
+        StartCoroutine(AutoExp());
+        SoundManager.instance.PlayBGM(0);
     }
     void Update()
     {
@@ -100,6 +101,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        SoundManager.instance.PlaySfx("Lose");
         uiEnd[0].SetActive(true);
         Stop();
     }
@@ -121,6 +123,7 @@ public class GameManager : MonoBehaviour
     {
         Stop();
         level++;
+        SoundManager.instance.PlaySfx("LevelUp");
         levelPanels[0].GetComponent<Panel>().SetPanel();
         levelPanels[1].GetComponent<Panel>().SetPanel();
         if (level > 9)
@@ -140,6 +143,7 @@ public class GameManager : MonoBehaviour
     {
         curseState.CurseAlarm();
         yield return curseAlarm;
+        SoundManager.instance.PlaySfx("Curse");
         int switchCount = Random.Range(1, 3);
         int caseNumber;
         if (switchCount == 1)
@@ -148,9 +152,10 @@ public class GameManager : MonoBehaviour
             caseNumber = Random.Range(0, 6);
         player1.ChangeKey($"Curse{switchCount}{caseNumber}");
         player2.ChangeKey($"Curse{switchCount}{caseNumber}");
-        yield return new WaitForSeconds(Random.Range(55f,115f));
+        yield return new WaitForSeconds(Random.Range(25f,55f));
         curseState.EndAlarm();
         yield return curseAlarm;
+        SoundManager.instance.PlaySfx("EndCurse");
         player1.ChangeKey("MainPlayer");
         player2.ChangeKey("MainPlayer");
         isCurse = false;

@@ -12,6 +12,7 @@ public class EventSpawn : MonoBehaviour
     [Header("# Object Data")]
     [SerializeField] int[] eventTime;
     [SerializeField] int orcTime;
+    [SerializeField] int endTime;
     [SerializeField] SpawnData spawnData;
     [SerializeField] bool second;
 
@@ -40,6 +41,10 @@ public class EventSpawn : MonoBehaviour
             isAngry = true;
             StartCoroutine(Spawn());
         }
+        if(isAngry && GameManager.Instance.gameTime >= endTime)
+        {
+            StopCoroutine(Spawn());
+        }
     }
     IEnumerator SkullPattern()
     {
@@ -66,8 +71,8 @@ public class EventSpawn : MonoBehaviour
         {
             GameObject enemy = GameManager.Instance.pool.Get(0);
             enemy.GetComponent<Enemy>().Init(spawnData, second);
-            int ranPos = Random.Range(1, 5);
-            if (ranPos == 1 || ranPos == 2)
+            int ranPos = Random.Range(0, 4);
+            if (ranPos == 0 || ranPos == 1)
             {
                 Vector3 ranSum = new(Random.Range(-10f, 10f), Random.Range(-1f, 1f), 0);
                 enemy.transform.position = spawnPosition[ranPos].position + ranSum;

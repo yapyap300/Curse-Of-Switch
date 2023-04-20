@@ -12,15 +12,16 @@ public class Level_Info : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (!GameManager.Instance.isCurse && Input.GetKeyDown(KeyCode.Escape)){
             if (GameManager.Instance.isStop)
-            {
+            {                
                 resume.onClick.Invoke();
             }
             else
             {
                 GameManager.Instance.Stop();
                 CurrentStat();
+                SoundManager.instance.PlaySfx("PauseIn");
                 uiPanel.SetActive(true);
             }
         }

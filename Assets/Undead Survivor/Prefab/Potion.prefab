@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1420451237624105565}
   - component: {fileID: 4366745037969413564}
-  - component: {fileID: 8965913092831835142}
   - component: {fileID: 3130914699020955315}
+  - component: {fileID: 8965913092831835142}
   m_Layer: 0
   m_Name: Potion
   m_TagString: Untagged
@@ -86,18 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8965913092831835142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2263497795984680427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7545c97eb3e173245b463484a371c008, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!70 &3130914699020955315
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -114,3 +102,15 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.5555556, y: 0.6111111}
   m_Direction: 0
+--- !u!114 &8965913092831835142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2263497795984680427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7545c97eb3e173245b463484a371c008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
