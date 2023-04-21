@@ -81,8 +81,8 @@ public class WeaponManager : MonoBehaviour
                     count++;
                 speed -= 0.1f;
                 break;
-            case 4://유도무기는 관통이 증가하지 않는 대신 데미지가 2배증가
-                damage += 3 * 2;
+            case 4:
+                damage += 6;
                 speed -= 0.1f;
                 break;
             case 5:
@@ -125,7 +125,7 @@ public class WeaponManager : MonoBehaviour
                     count--;   
                 break;
             case 4:
-                damage -= 3 * 2;
+                damage -= 6;
                 speed += 0.1f;
                 break;
             case 5:
@@ -244,40 +244,46 @@ public class WeaponManager : MonoBehaviour
             }            
         }
     }
-    IEnumerator Fire()// 원거리 무기가 기본으로 실행하는 메서드 유도무기인지 아닌지 구별하는 파라메터 사용
+    IEnumerator Fire()// 원거리 무기가 기본으로 실행하는 메서드 유도무기인지 아닌지 구별하는 파라메터 사용 // 하다보니 원거리 무기들의 하자가 너무 심해서 5렙 부터는 한번에 두발씩 쏘게함
     {
         while (true)
         {
             yield return new WaitForSeconds(speed);
+            for (int index = 0; index < (level-1)/5 + 1; index++)
+            {
+                if (player.scanner.nearTarget != null)
+                {
+                    Vector3 targetPos = player.scanner.nearTarget.position;
+                    Vector3 dir = targetPos - transform.position;
+                    dir = dir.normalized;
+
+                    Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+
+                    bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
+                    bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, count, dir, id);
+
+                    SoundManager.instance.PlaySfx("Range");
+                }
+                yield return new WaitForSeconds(0.1f);
+            }        
+        }
+    }
+    IEnumerator Boom()//폭발 무기는 화염구를 날아간 경로와 폭발자리에 데미지를 준다.
+    {
+        while (true)
+        {
             if (player.scanner.nearTarget != null)
             {
-                Vector3 targetPos = player.scanner.nearTarget.position;
+                yield return new WaitForSeconds(speed);
+                Vector3 targetPos = transform.position + new Vector3(Random.Range(-5f, 5f), Random.Range(-7f, 7f), 0f);
                 Vector3 dir = targetPos - transform.position;
                 dir = dir.normalized;
 
                 Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-                
-                bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));                
-                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, count, dir,id);
 
-                SoundManager.instance.PlaySfx("Range");
-            }            
-        }
-    }
-    IEnumerator Boom()//폭발 무기는 일정간격으로 적이 있든 없든 랜덤한 목표위치로 화염구를 날리고 그자리에서 폭발할때 데미지를 준다.
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(speed);
-            Vector3 targetPos = transform.position + new Vector3(Random.Range(-5f,5f), Random.Range(-7f, 7f), 0f);
-            Vector3 dir = targetPos - transform.position;
-            dir = dir.normalized;
-
-            Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-            
-            bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));           
-            bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);//폭발무기는 날아가는 동안 적이랑 부딫여서 데미지를 주지않음
-            
+                bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
+                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);//폭발무기는 날아가는 동안 적이랑 부딫여서 데미지를 주지않음
+            }
         }
     }
 }
