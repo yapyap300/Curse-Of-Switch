@@ -802,7 +802,7 @@ MonoBehaviour:
   - {fileID: 920877932}
   - {fileID: 2011272012}
   skulls: []
-  eventTime: 8a00000091000000ff000000110100005b0100006a01000090010000a2010000b6010000f40100000d0200001c02000058020000b2020000020300000d030000
+  eventTime: 8a000000c8000000ff000000110100005b0100006a01000090010000a2010000b6010000f40100000d0200001c02000058020000b2020000020300000d030000
   orcTime: 840
   endTime: 1020
   spawnData:
@@ -1445,82 +1445,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 302915970}
-  m_CullTransparentMesh: 1
---- !u!1 &311493353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 311493354}
-  - component: {fileID: 311493356}
-  - component: {fileID: 311493355}
-  m_Layer: 5
-  m_Name: Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &311493354
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311493353}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1321111508}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 0.5, y: 155}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &311493355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311493353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.6}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &311493356
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311493353}
   m_CullTransparentMesh: 1
 --- !u!1 &337750780
 GameObject:
@@ -30396,7 +30320,7 @@ MonoBehaviour:
     - Extra Damage
     weaponDetails:
     - "\uACF5\uACA9\uB825+ \uD22C\uC0AC\uCCB4++ \uD68C\uC804\uC18D\uB3C4++"
-    - "\uACF5\uACA9\uB825+ \uD06C\uAE30+"
+    - "\uACF5\uACA9\uB825+"
     - "\uACF5\uACA9\uB825+ \uACF5\uACA9\uC18D\uB3C4+ \uD22C\uC0AC\uCCB4+"
     - "\uACF5\uACA9\uB825+ \uACF5\uACA9\uC18D\uB3C4+ \uAD00\uD1B5\uB825+"
     - "\uACF5\uACA9\uB825++ \uACF5\uACA9\uC18D\uB3C4+"
@@ -30420,11 +30344,12 @@ MonoBehaviour:
   level: 0
   maxLevel: 70
   maxStateLevel: 10
-  exp: 0
+  exp: 10
   nextExp: 0f000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   isStop: 0
   isCurse: 0
   isEnd: 0
+  isLevelUp: 0
   gameTime: 0
   maxTime: 0
   curseTime: 6e000000f00000004a01000090010000e001000094020000ee020000
@@ -61085,7 +61010,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Select
+  m_Text: '"1"'
 --- !u!222 &1235497686
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -61397,7 +61322,6 @@ RectTransform:
   - {fileID: 102490833}
   - {fileID: 1447484841}
   - {fileID: 616062900}
-  - {fileID: 311493354}
   m_Father: {fileID: 1424757167}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71770,7 +71694,7 @@ MonoBehaviour:
     exp: 5
   - spriteType: 4
     spawnTime: 5
-    health: 500
+    health: 1500
     speed: 3
     exp: 1000
   - spriteType: 5
@@ -71990,6 +71914,7 @@ MonoBehaviour:
   bgmClip:
   - {fileID: 8300000, guid: ce56a5276d510fb4b91f0a7aeda88f47, type: 3}
   - {fileID: 8300000, guid: 04f91d8a735905e44ad10917f4f0eb25, type: 3}
+  bgmVolume: 0.4
   sfxClips:
   - {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
   - {fileID: 8300000, guid: 0bddcb411d826e14bb26d40ae45d8e22, type: 3}
@@ -72005,6 +71930,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b261ae113cb3e5645927ccddba4cec35, type: 3}
   - {fileID: 8300000, guid: 95b34324e0090ea40b8533a699959e5f, type: 3}
   - {fileID: 8300000, guid: 64fe906fcb42ea540bb8d37163e7c989, type: 3}
+  - {fileID: 8300000, guid: bde7aae8c244854489d74eb4051f890d, type: 3}
+  - {fileID: 8300000, guid: d1fff914354e28f48a399de10c314e50, type: 3}
+  sfxVolume: 0.5
+  channelCount: 16
 --- !u!4 &1617270950
 Transform:
   m_ObjectHideFlags: 0
@@ -72447,7 +72376,7 @@ MonoBehaviour:
     exp: 5
   - spriteType: 4
     spawnTime: 5
-    health: 500
+    health: 1500
     speed: 3
     exp: 1000
   - spriteType: 5
@@ -72910,7 +72839,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Select
+  m_Text: '"3"'
 --- !u!222 &1861895127
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -83563,7 +83492,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Select
+  m_Text: '"2"'
 --- !u!222 &2042944729
 CanvasRenderer:
   m_ObjectHideFlags: 0

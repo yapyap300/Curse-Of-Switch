@@ -12,7 +12,7 @@ public class Level_Info : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.isCurse && Input.GetKeyDown(KeyCode.Escape)){
+        if (!GameManager.Instance.isLevelUp && !GameManager.Instance.isCurse && Input.GetKeyDown(KeyCode.Escape)){
             if (GameManager.Instance.isStop)
             {                
                 resume.onClick.Invoke();
@@ -49,6 +49,6 @@ public class Level_Info : MonoBehaviour
             }
         }
         float hitCount = GameManager.Instance.player1.hitCount + GameManager.Instance.player2.hitCount;
-        skull.fillAmount = hitCount / 20;
+        skull.fillAmount = hitCount / 40;
     }
 }

@@ -1,7 +1,5 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 public class EventSpawn : MonoBehaviour
@@ -19,7 +17,8 @@ public class EventSpawn : MonoBehaviour
     int eventCount;
     bool isAngry;
     Vector3[] initialPosition;
-    readonly WaitForSeconds delay = new(0.75f);
+    readonly WaitForSeconds moveDelay = new(0.75f);
+    readonly WaitForSeconds delay = new(1.5f);
     void Awake()
     {
         skulls = new Transform[4];
@@ -50,19 +49,22 @@ public class EventSpawn : MonoBehaviour
     {
         skulls[0] = GameManager.Instance.pool.Get(8).transform;
         skulls[0].transform.position = transform.position + initialPosition[0];
-        yield return delay;
+        yield return moveDelay;
         skulls[0].DOMoveX(skulls[0].position.x + 13f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[0].gameObject.SetActive(false));
+        yield return delay;
         skulls[1] = GameManager.Instance.pool.Get(8).transform;
         skulls[1].transform.position = transform.position + initialPosition[1];
-        yield return delay;
+        yield return moveDelay;
         skulls[1].DOMoveX(skulls[1].position.x - 13f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[1].gameObject.SetActive(false));
+        yield return delay;
         skulls[2] = GameManager.Instance.pool.Get(9).transform;
         skulls[2].transform.position = transform.position + initialPosition[2];
+        yield return moveDelay;
+        skulls[2].DOMoveY(skulls[2].position.y - 14f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[2].gameObject.SetActive(false));
         yield return delay;
-        skulls[2].DOMoveY(skulls[2].position.y - 14f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[2].gameObject.SetActive(false));        
         skulls[3] = GameManager.Instance.pool.Get(9).transform;
         skulls[3].transform.position = transform.position + initialPosition[3];
-        yield return delay;
+        yield return moveDelay;
         skulls[3].DOMoveY(skulls[3].position.y + 14f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[3].gameObject.SetActive(false));
     }
     IEnumerator Spawn()

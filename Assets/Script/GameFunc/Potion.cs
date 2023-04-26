@@ -10,12 +10,14 @@ public class Potion : MonoBehaviour
         {
             Player myplay = collision.GetComponent<Player1>();
             myplay.Heal();
+            SoundManager.instance.PlaySfx("Heal");
             gameObject.SetActive(false);
         }
         if (collision.CompareTag("Player2"))
         {
             Player myplay = collision.GetComponent<Player2>();
             myplay.Heal();
+            SoundManager.instance.PlaySfx("Heal");
             gameObject.SetActive(false);
         }
     }

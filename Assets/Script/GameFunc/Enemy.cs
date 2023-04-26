@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -13,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Rigidbody2D target;
 
     bool isLive;
+    bool knockBackCool;
     
     Rigidbody2D rigid;
     Animator animator;
@@ -78,12 +77,13 @@ public class Enemy : MonoBehaviour
         if (!collision.CompareTag("Weapon") || !isLive)
             return;
 
-        health -= collision.GetComponent<Weapon>().damage;
-        StartCoroutine(KnockBack());
+        health -= collision.GetComponent<Weapon>().damage;        
 
         if(health > 0)
         {
             animator.SetTrigger("Hit");
+            if(!knockBackCool)
+                StartCoroutine(KnockBack());
             int randomSound = Random.Range(0, 2);
             if(randomSound == 0)
             {
@@ -102,29 +102,26 @@ public class Enemy : MonoBehaviour
             animator.SetBool("Dead",true);
             spriter.sortingOrder = 1;
             GameManager.Instance.GetExp(dropExp);
-
-            SoundManager.instance.PlaySfx("Dead");
+            SoundManager.instance.PlayDeadSfx();
         }
     }    
     IEnumerator KnockBack()
     {
         yield return wait;
-        Vector3 playerPos = GameManager.Instance.player1.transform.position;
+        knockBackCool = true;
+        Vector3 playerPos = target.position;
         Vector3 dir = transform.position- playerPos;
         rigid.AddForce(dir.normalized * 2,ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.2f);
+        knockBackCool = false;
     }
     void Dead()
-    {        
-        gameObject.SetActive(false);
-        if (Random.Range(0, 500) < 1)
+    {       
+        if (Random.Range(0, 1000) < 1)
         {
             Transform potion = GameManager.Instance.pool.Get(7).transform;
             potion.position = transform.position;
         }
-        if (Random.Range(0, 500) < 1)
-        {
-            Transform nuclear = GameManager.Instance.pool.Get(10).transform;
-            nuclear.position = transform.position;
-        }
+        gameObject.SetActive(false);
     }
 }

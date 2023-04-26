@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -215,6 +214,7 @@ public class Panel : MonoBehaviour
         GameManager.Instance.levelPanels[1].SetActive(false);
         GameManager.Instance.levelPanels[2].SetActive(false);
         SoundManager.instance.PlaySfx("Select");
+        GameManager.Instance.isLevelUp = false;
         GameManager.Instance.Resume();
     }
 }

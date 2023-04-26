@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -45,7 +43,7 @@ public class Weapon : MonoBehaviour
                 target = GameManager.Instance.player2.scanner.nearTarget.GetComponent<Rigidbody2D>();
                 break;
             case 5:
-                col.enabled = false;
+                col.enabled = true;
                 targetPos = dir;
                 rigid.velocity = (dir - transform.position).normalized * 10f;
                 break;
@@ -55,19 +53,10 @@ public class Weapon : MonoBehaviour
     {
         if (GameManager.Instance.isStop)
             return;
-        if (id == 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.player1.transform.position))
-        {
-            rigid.velocity = Vector2.zero;
-            gameObject.SetActive(false);
-        }
-        else if (id > 2 && 20 < Vector3.Distance(transform.position, GameManager.Instance.player2.transform.position))//총알 오브젝트와 투척 무기 관리를 위해 작성
-        {
-            rigid.velocity = Vector2.zero;
-            gameObject.SetActive(false);
-        }
+        
         if (isTrack)
             Tracking();
-        if (col.enabled == false)//폭발무기만 날아갈때 콜라이더를 비활성화하기때문에 거르기 가능       
+        if (id == 5 && col.enabled == true)      
             End();
     }
     void OnTriggerEnter2D(Collider2D collision)
@@ -83,7 +72,13 @@ public class Weapon : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Area") || (id != 2 && id != 3))
+            return;
+        rigid.velocity = Vector2.zero;
+        gameObject.SetActive(false);
+    }
     void FinishAttack()//애니메이션을 이용한 공격을 비활성화 시키기위해 애니메이션에서 실행할 메서드
     {
         gameObject.SetActive(false);
@@ -113,7 +108,7 @@ public class Weapon : MonoBehaviour
         if (distance < 0.1f)
         {
             rigid.velocity = Vector2.zero;
-            col.enabled = true;
+            col.enabled = false;
             animator.SetTrigger("Boom");
             SoundManager.instance.PlaySfx("Boom");
         }

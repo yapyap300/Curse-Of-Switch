@@ -1,11 +1,6 @@
-using Redcode.Pools;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {   
@@ -29,6 +24,7 @@ public class GameManager : MonoBehaviour
     public bool isStop;
     public bool isCurse;
     public bool isEnd;
+    public bool isLevelUp;
     public float gameTime;
     public float maxTime;
     public int[] curseTime;
@@ -66,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
         if(gameTime > maxTime)
         {
-            if (player1.hitCount + player2.hitCount <= 20)// 저주상태일때 받은 히트수와 해골패턴의 히트수를 조건으로 한다.
+            if (player1.hitCount + player2.hitCount <= 40)// 저주상태일때 받은 히트수를 조건으로 한다.
             {
                 StartCoroutine(HiddenEnd());
                 //히든 엔딩인 보스전
@@ -122,6 +118,7 @@ public class GameManager : MonoBehaviour
     void LevelUp()
     {
         Stop();
+        isLevelUp = true;
         level++;
         SoundManager.instance.PlaySfx("LevelUp");
         levelPanels[0].GetComponent<Panel>().SetPanel();

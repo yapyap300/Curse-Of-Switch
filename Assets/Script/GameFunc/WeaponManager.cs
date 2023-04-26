@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
@@ -197,7 +196,7 @@ public class WeaponManager : MonoBehaviour
             weapon.localRotation = Quaternion.identity;
             Vector3 rotVec = 360 * index * Vector3.forward / count;
             weapon.Rotate(rotVec);
-            weapon.Translate(weapon.up * 5f,Space.World);
+            weapon.Translate(weapon.up * 3f,Space.World);
             weapon.GetComponent<Weapon>().Init(damage + plusDamage * level,-1,Vector3.zero,id);// -1은 근접무기는 무조건 관통하게 하려고 한것
         }
     }
@@ -244,7 +243,7 @@ public class WeaponManager : MonoBehaviour
             }            
         }
     }
-    IEnumerator Fire()// 원거리 무기가 기본으로 실행하는 메서드 유도무기인지 아닌지 구별하는 파라메터 사용 // 하다보니 원거리 무기들의 하자가 너무 심해서 5렙 부터는 한번에 두발씩 쏘게함
+    IEnumerator Fire() // 하다보니 원거리 무기들의 하자가 너무 심해서 5렙 부터는 한번에 두발씩 쏘게함
     {
         while (true)
         {
@@ -282,7 +281,7 @@ public class WeaponManager : MonoBehaviour
                 Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
 
                 bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
-                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);//폭발무기는 날아가는 동안 적이랑 부딫여서 데미지를 주지않음
+                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);
             }
         }
     }
