@@ -210,11 +210,12 @@ public class Panel : MonoBehaviour
     void PlayDelegate()
     {
         panel();
+        SoundManager.Instance.PlaySfx("Select");
+        GameManager.Instance.isLevelUp = false;
+        GameManager.Instance.Resume();
         GameManager.Instance.levelPanels[0].SetActive(false);
         GameManager.Instance.levelPanels[1].SetActive(false);
         GameManager.Instance.levelPanels[2].SetActive(false);
-        SoundManager.instance.PlaySfx("Select");
-        GameManager.Instance.isLevelUp = false;
-        GameManager.Instance.Resume();
+        
     }
 }

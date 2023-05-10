@@ -87,11 +87,11 @@ public class Enemy : MonoBehaviour
             int randomSound = Random.Range(0, 2);
             if(randomSound == 0)
             {
-                SoundManager.instance.PlaySfx("Hit0");
+                SoundManager.Instance.PlaySfx("Hit0");
             }
             else
             {
-                SoundManager.instance.PlaySfx("Hit1");
+                SoundManager.Instance.PlaySfx("Hit1");
             }            
         }
         else
@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
             animator.SetBool("Dead",true);
             spriter.sortingOrder = 1;
             GameManager.Instance.GetExp(dropExp);
-            SoundManager.instance.PlayDeadSfx();
+            SoundManager.Instance.PlayDeadSfx();
         }
     }    
     IEnumerator KnockBack()
@@ -121,6 +121,11 @@ public class Enemy : MonoBehaviour
         {
             Transform potion = GameManager.Instance.pool.Get(7).transform;
             potion.position = transform.position;
+        }
+        if (Random.Range(0, 1000) < 1)
+        {
+            Transform nuclear = GameManager.Instance.pool.Get(10).transform;
+            nuclear.position = transform.position;
         }
         gameObject.SetActive(false);
     }

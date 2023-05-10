@@ -21,7 +21,7 @@ public class Level_Info : MonoBehaviour
             {
                 GameManager.Instance.Stop();
                 CurrentStat();
-                SoundManager.instance.PlaySfx("PauseIn");
+                SoundManager.Instance.PlaySfx("PauseIn");
                 uiPanel.SetActive(true);
             }
         }

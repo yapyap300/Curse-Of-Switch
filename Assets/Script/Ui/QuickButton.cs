@@ -8,7 +8,7 @@ public class QuickButton : MonoBehaviour
     [SerializeField] Button[] buttons;
     void Update()
     {
-        if (buttons[0].gameObject.activeSelf)
+        if (GameManager.Instance.isLevelUp)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {

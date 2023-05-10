@@ -28,7 +28,7 @@ public class SpawnMob : MonoBehaviour
         if (!drakness && level > 4)
         {
             drakness = true;
-            SoundManager.instance.PlayBGM(1);
+            SoundManager.Instance.PlayBGM(1);
             foreach(Transform t in ground)
             {
                 t.GetComponent<Tilemap>().color = new Color(1f, 0.3f, 0.4f);                
@@ -63,7 +63,7 @@ public class SpawnMob : MonoBehaviour
             int ranPos = Random.Range(1, 5);
             if (ranPos == 1 || ranPos == 2)
             {
-                Vector3 ranSum = new(Random.Range(-11f, 11f), Random.Range(-1f, 1f), 0);
+                Vector3 ranSum = new(Random.Range(-12f, 12f), Random.Range(-1f, 1f), 0);
                 enemy.transform.position = spawnPosition[ranPos].position + ranSum;
             }
             else

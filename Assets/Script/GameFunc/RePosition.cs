@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+
 
 public class RePosition : MonoBehaviour
 {
@@ -32,12 +30,7 @@ public class RePosition : MonoBehaviour
         dirX = dirX < 0 ? -1 : 1;
         dirY = dirY < 0 ? -1 : 1;
 
-        Vector3 PlayerDir;
-
-        if (id == 1)
-            PlayerDir = GameManager.Instance.player1.InputVec;
-        else
-            PlayerDir = GameManager.Instance.player2.InputVec;
+        
         switch (transform.tag)
         {
             case "Map":

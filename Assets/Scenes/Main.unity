@@ -320,15 +320,15 @@ MonoBehaviour:
   - {fileID: 1619486591}
   - {fileID: 592491587}
   skulls: []
-  eventTime: 581b0000581b0000581b0000
-  orcTime: 840
+  eventTime: c8000000110100006a010000a2010000f40100001c020000b20200000d0300005203000098030000f2030000380400007e040000
+  orcTime: 780
   endTime: 1020
   spawnData:
     spriteType: 9
     spawnTime: 1
     health: 150
     speed: 4
-    exp: 50
+    exp: 500
   second: 1
 --- !u!1 &30271014
 GameObject:
@@ -392,7 +392,7 @@ Transform:
   - {fileID: 1808745544}
   - {fileID: 928422788}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &58976092
 GameObject:
@@ -802,15 +802,15 @@ MonoBehaviour:
   - {fileID: 920877932}
   - {fileID: 2011272012}
   skulls: []
-  eventTime: 8a000000c8000000ff000000110100005b0100006a01000090010000a2010000b6010000f40100000d0200001c02000058020000b2020000020300000d030000
-  orcTime: 840
+  eventTime: 8a000000ff0000005b01000090010000b60100000d02000058020000020300003e03000084030000d40300001a04000056040000
+  orcTime: 780
   endTime: 1020
   spawnData:
     spriteType: 9
     spawnTime: 1
     health: 150
     speed: 4
-    exp: 50
+    exp: 500
   second: 0
 --- !u!1 &144215464
 GameObject:
@@ -30319,7 +30319,7 @@ MonoBehaviour:
     - Max Health
     - Extra Damage
     weaponDetails:
-    - "\uACF5\uACA9\uB825+ \uD22C\uC0AC\uCCB4++ \uD68C\uC804\uC18D\uB3C4++"
+    - "\uACF5\uACA9\uB825+ \uD22C\uC0AC\uCCB4++ \uC18D\uB3C4++   \uC8FC\uAE30+"
     - "\uACF5\uACA9\uB825+"
     - "\uACF5\uACA9\uB825+ \uACF5\uACA9\uC18D\uB3C4+ \uD22C\uC0AC\uCCB4+"
     - "\uACF5\uACA9\uB825+ \uACF5\uACA9\uC18D\uB3C4+ \uAD00\uD1B5\uB825+"
@@ -30344,15 +30344,15 @@ MonoBehaviour:
   level: 0
   maxLevel: 70
   maxStateLevel: 10
-  exp: 10
-  nextExp: 0f000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  exp: 14
+  nextExp: 
   isStop: 0
   isCurse: 0
   isEnd: 0
   isLevelUp: 0
   gameTime: 0
   maxTime: 0
-  curseTime: 6e000000f00000004a01000090010000e001000094020000ee020000
+  curseTime: 6e000000f00000004a01000090010000e001000094020000ee02000084030000fc03000060040000
   curseIndex: 0
   levelPanels:
   - {fileID: 901828931}
@@ -40105,6 +40105,50 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &698915895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 698915897}
+  - component: {fileID: 698915896}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &698915896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698915895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ff290bd10778747ab195096d929785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &698915897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698915895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &726518829
 GameObject:
   m_ObjectHideFlags: 0
@@ -50027,6 +50071,86 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b5057ec4-5dbb-41a4-8e79-04ccb27b6a74
     m_ActionName: MainPlayer/Move2[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 57957df8-30ca-4e67-a305-7a32627deb37
+    m_ActionName: Curse10/Move1[/Keyboard/upArrow,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c94b49e3-a2b1-46a3-b996-434fdbf9092d
+    m_ActionName: Curse10/Move2[/Keyboard/w,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7ae52240-bf9d-470d-bbde-9ba2442a87ed
+    m_ActionName: Curse11/Move1[/Keyboard/w,/Keyboard/downArrow,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e6645b4e-5a80-4c22-97d6-bb021c08a1d8
+    m_ActionName: Curse11/Move2[/Keyboard/upArrow,/Keyboard/s,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a54d4a6d-0d5f-4855-9e0e-88e0e395f916
+    m_ActionName: Curse12/Move1[/Keyboard/w,/Keyboard/s,/Keyboard/leftArrow,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9934648a-1819-4fa4-ba74-5d5017c8f1ad
+    m_ActionName: Curse12/Move2[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/a,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 396dabc6-36a7-4208-aceb-5874ea8cbe40
+    m_ActionName: Curse13/Move1[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d0d7aa8-ce9d-4f28-924b-4afe5fea5d93
+    m_ActionName: Curse13/Move2[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0d095154-0975-427e-9b36-262fc1c7a7e7
+    m_ActionName: Curse20/Move1[/Keyboard/upArrow,/Keyboard/s,/Keyboard/a,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ecda9d2-a65d-4021-97e6-fbde79f9310f
+    m_ActionName: Curse20/Move2[/Keyboard/w,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dca05b5b-c299-441a-b326-030257708918
+    m_ActionName: Curse21/Move1[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 797469d7-0ef2-456a-a43a-7df1dfb479ea
+    m_ActionName: Curse21/Move2[/Keyboard/w,/Keyboard/s,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6d4da724-17b1-4985-9acc-eab241db3109
+    m_ActionName: Curse22/Move1[/Keyboard/w,/Keyboard/downArrow,/Keyboard/a,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 59a32b41-399a-48be-9ba3-724394aaf017
+    m_ActionName: Curse22/Move2[/Keyboard/upArrow,/Keyboard/s,/Keyboard/leftArrow,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 38078e16-055b-469a-91f1-c9852dc5277c
+    m_ActionName: Curse23/Move1[/Keyboard/w,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9d4e0f24-2df2-4111-a8ab-3d419ca77305
+    m_ActionName: Curse23/Move2[/Keyboard/upArrow,/Keyboard/s,/Keyboard/a,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 315f7bc9-0e11-4e53-bb48-2c549e28a061
+    m_ActionName: Curse24/Move1[/Keyboard/w,/Keyboard/s,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 73d8849a-071f-4bdf-8584-f41b7e9d0038
+    m_ActionName: Curse24/Move2[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b6324f1-9cf1-46bc-b88d-43298c663054
+    m_ActionName: Curse25/Move1[/Keyboard/upArrow,/Keyboard/s,/Keyboard/leftArrow,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 841b8e05-6b4c-43ac-ad61-8d46c0c58c94
+    m_ActionName: Curse25/Move2[/Keyboard/w,/Keyboard/downArrow,/Keyboard/a,/Keyboard/rightArrow]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: MainPlayer
@@ -51631,7 +51755,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1200592639
 MonoBehaviour:
@@ -51656,7 +51780,7 @@ MonoBehaviour:
   - {fileID: 2263497795984680427, guid: 1d18cb7ec6c89fa40ac481d818ff4bbd, type: 3}
   - {fileID: 5509875103358380232, guid: feeabf7ad6a3eb04b8eb80a4cd226cd7, type: 3}
   - {fileID: 968330095200900229, guid: 0a138d6a9cbc9584cae9871edd6fa281, type: 3}
-  - {fileID: 1228326516062205612, guid: ff27c14a719855548bca66bc4aed864b, type: 3}
+  - {fileID: 4026463894413987481, guid: fa29b660f85238e4fa5d5a409a39f1ee, type: 3}
 --- !u!1 &1202281049
 GameObject:
   m_ObjectHideFlags: 0
@@ -70645,7 +70769,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD68C\uBCF5"
+  m_Text: 
 --- !u!222 &1348071075
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -70936,7 +71060,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1409229182
 MonoBehaviour:
@@ -71067,7 +71191,7 @@ RectTransform:
   - {fileID: 1484358777}
   - {fileID: 192536073}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -71679,7 +71803,7 @@ MonoBehaviour:
     exp: 1
   - spriteType: 1
     spawnTime: 0.2
-    health: 10
+    health: 9
     speed: 1.5
     exp: 2
   - spriteType: 2
@@ -71700,20 +71824,20 @@ MonoBehaviour:
   - spriteType: 5
     spawnTime: 0.2
     health: 30
-    speed: 4
-    exp: 10
+    speed: 3.5
+    exp: 100
   - spriteType: 6
     spawnTime: 1
     health: 300
     speed: 2.5
-    exp: 30
+    exp: 300
   - spriteType: 7
     spawnTime: 1.5
     health: 1000
     speed: 3
-    exp: 60
+    exp: 600
   - spriteType: 8
-    spawnTime: 0.2
+    spawnTime: 0.1
     health: 1000
     speed: 2
     exp: 1000
@@ -71725,7 +71849,7 @@ MonoBehaviour:
   level: 0
   eventCount: 0
   second: 0
-  nextMonster: 78000000f0000000fe0100003a0200005802000048030000fc03000056040000
+  nextMonster: 78000000f0000000fe0100003a020000580200000c030000fc03000074040000
 --- !u!1 &1575047437
 GameObject:
   m_ObjectHideFlags: 0
@@ -71947,7 +72071,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1619486590
 GameObject:
@@ -72361,7 +72485,7 @@ MonoBehaviour:
     exp: 1
   - spriteType: 1
     spawnTime: 0.2
-    health: 10
+    health: 9
     speed: 1.5
     exp: 2
   - spriteType: 2
@@ -72382,18 +72506,18 @@ MonoBehaviour:
   - spriteType: 5
     spawnTime: 0.2
     health: 30
-    speed: 4
-    exp: 10
+    speed: 3.5
+    exp: 100
   - spriteType: 6
     spawnTime: 1
     health: 300
     speed: 2.5
-    exp: 30
+    exp: 300
   - spriteType: 7
     spawnTime: 1.5
     health: 1000
     speed: 3
-    exp: 60
+    exp: 600
   - spriteType: 8
     spawnTime: 0.2
     health: 1000
@@ -72407,7 +72531,7 @@ MonoBehaviour:
   level: 0
   eventCount: 0
   second: 1
-  nextMonster: 78000000f0000000fe0100003a0200005802000048030000fc03000056040000
+  nextMonster: 78000000f0000000fe0100003a020000580200000c030000fc03000074040000
 --- !u!1 &1737625691
 GameObject:
   m_ObjectHideFlags: 0
@@ -72492,7 +72616,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1737625695
 MonoBehaviour:
@@ -72983,7 +73107,7 @@ Transform:
   - {fileID: 828690830}
   - {fileID: 1679530425}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1875351848
 GameObject:

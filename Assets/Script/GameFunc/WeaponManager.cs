@@ -7,24 +7,24 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] int prefabId;//오브젝트 풀에서 가져올 무기 구분용
     [SerializeField] float damage;// 기본 데미지
     [SerializeField] float plusDamage;//플레이어의 스탯으로부터 추가되는 데미지
-    [SerializeField] int count;//주변을 도는 무기와 투척무기는 갯수, 휘두르는 무기는 함수 호출 간격용 변수, 원거리무기 0번째는 관통력으로 사용    
-    [SerializeField] float speed;//회전 속도, 찌르는 공격속도,원거리 무기의 발사속도에 사용 초기에 정해지고 변경하지 않을예정
+    [SerializeField] int count;//주변을 도는 무기와 투척무기는 갯수, 원거리무기 0번째는 관통력으로 사용    
+    [SerializeField] float speed;
     public int level;//현재 무기 레벨상황 스탯증가에 다양하게 사용
     [SerializeField] int maxLevel;
     public bool isMax;
 
     [SerializeField] Player player;
     
-    void Start()
+    void Awake()
     {
-        Init();               
+        Init();
     }
     void OnEnable()
     {
         switch (id)
         {            
             case 0:
-                Stack();
+                StartCoroutine(StackRoutine());
                 break;
             case 1:
                 StartCoroutine(Stap());
@@ -92,7 +92,15 @@ public class WeaponManager : MonoBehaviour
         if (level == 1)       
             gameObject.SetActive(true);
         if (level == maxLevel)
+        {
+            if(id == 0)
+            {
+                StopCoroutine(StackRoutine());
+                Stack();
+            }
             isMax = true;
+        }
+            
     }
     public void LevelDown()
     {
@@ -103,7 +111,7 @@ public class WeaponManager : MonoBehaviour
             case 0:
                 damage -= 5;
                 count -= 2;
-                speed -= 10;
+                speed -= 5;
                 StackInit();
                 Stack();
                 break;
@@ -118,7 +126,7 @@ public class WeaponManager : MonoBehaviour
             case 3:
                 damage -= 3;
                 speed += 0.1f;
-                if (level > 5)
+                if (level >= 5)
                     damage -= 3;
                 else
                     count--;   
@@ -132,6 +140,14 @@ public class WeaponManager : MonoBehaviour
                 speed += 1f;
                 break;
         }
+        if (level == maxLevel - 1)
+        {
+            if (id == 0)
+            {
+                StartCoroutine(StackRoutine());
+            }
+            isMax = false;
+        }        
         if(level == 0)
             gameObject.SetActive(false);
     }
@@ -156,6 +172,45 @@ public class WeaponManager : MonoBehaviour
                 break;
             case 5:
                 speed = 11f;
+                break;
+        }
+    }
+    public void Init(int level)//히든 스테이지에서 사용될 함수 전 씬에서 최종으로 달성한 레벨을 기준으로 무기들을 구성하는 함수
+    {
+        this.level = level;
+        switch (id)
+        {
+            case 0:
+                damage = level * 5;
+                count = level * 2;
+                speed += level * 5;                
+                break;
+            case 1:
+                damage = level * 10;
+                break;
+            case 2:
+                damage = level * 15;
+                speed -= level * 1f;
+                count = level;
+                break;
+            case 3:
+                damage = level * 3;
+                speed -= level * 0.1f;
+                if (level > 5)
+                {
+                    damage += (level - 5) * 3;
+                    count = 5;
+                }
+                else
+                    count = level;
+                break;
+            case 4:
+                damage = level * 6;
+                speed -= level * 0.1f;
+                break;
+            case 5:
+                damage = level * 20;
+                speed -= level * 1f;
                 break;
         }
     }
@@ -207,6 +262,16 @@ public class WeaponManager : MonoBehaviour
             child.gameObject.SetActive(false);
         }
     }
+    IEnumerator StackRoutine()
+    {
+        while (true)
+        {
+            Stack();
+            yield return new WaitForSeconds(5 + 0.1f * level);
+            StackInit();
+            yield return new WaitForSeconds(2 - 0.1f * level);
+        }
+    }
     IEnumerator Stap()//캐릭터가 진행하는 방향으로 무기를 찌르는 메서드 가만히 서있으면 오른쪽을 찌름
     {        
         while (true)
@@ -223,7 +288,6 @@ public class WeaponManager : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(Vector3.forward,rotVec);//무기 프리펩이아니라 프리펩의 부모인 관리오브젝트 자체가 돌아야함         
             weapon.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, Vector3.zero,id);        
         }
-
     }
     IEnumerator Throw()//위쪽 랜덤한 각도로 낫을 투척하는 메서드
     {
@@ -238,17 +302,17 @@ public class WeaponManager : MonoBehaviour
                 weapon.Translate(weapon.up * 1.5f, Space.World);
                 weapon.Rotate(rotVec);
                 weapon.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, Vector3.zero,id);
-                SoundManager.instance.PlaySfx("Melee0");
+                SoundManager.Instance.PlaySfx("Melee0");
                 yield return new WaitForSeconds(speed/count);
             }            
         }
     }
-    IEnumerator Fire() // 하다보니 원거리 무기들의 하자가 너무 심해서 5렙 부터는 한번에 두발씩 쏘게함
+    IEnumerator Fire() // 하다보니 원거리 무기들의 하자가 너무 심해서 레벨마다 하나씩 더 발사하게함 몹이 쌓이면 처리가 아예 안됨
     {
         while (true)
         {
             yield return new WaitForSeconds(speed);
-            for (int index = 0; index < (level-1)/5 + 1; index++)
+            for (int index = 0; index < (level/2) + (level%2); index++)
             {
                 if (player.scanner.nearTarget != null)
                 {
@@ -261,28 +325,27 @@ public class WeaponManager : MonoBehaviour
                     bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
                     bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, count, dir, id);
 
-                    SoundManager.instance.PlaySfx("Range");
+                    SoundManager.Instance.PlaySfx("Range");
                 }
                 yield return new WaitForSeconds(0.1f);
             }        
         }
     }
-    IEnumerator Boom()//폭발 무기는 화염구를 날아간 경로와 폭발자리에 데미지를 준다.
+    IEnumerator Boom()//폭발 무기는 화염구를 날아간 경로와 폭발자리에 데미지를 준다.타겟은 랜덤
     {
         while (true)
-        {
-            if (player.scanner.nearTarget != null)
-            {
-                yield return new WaitForSeconds(speed);
-                Vector3 targetPos = transform.position + new Vector3(Random.Range(-5f, 5f), Random.Range(-7f, 7f), 0f);
-                Vector3 dir = targetPos - transform.position;
-                dir = dir.normalized;
+        {            
 
-                Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+            Vector3 targetPos = transform.position + new Vector3(Random.Range(-5f, 5f), Random.Range(-7f, 7f), 0f);
+            Vector3 dir = targetPos - transform.position;
+            dir = dir.normalized;
 
-                bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
-                bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);
-            }
+            Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+
+            bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
+            bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);
+
+            yield return new WaitForSeconds(speed);
         }
     }
 }

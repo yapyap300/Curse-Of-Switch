@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
+    private static SoundManager instance;
     [Header("#===BGM")]
     [SerializeField] AudioClip[] bgmClip;
     public float bgmVolume;
@@ -17,6 +17,14 @@ public class SoundManager : MonoBehaviour
     Dictionary<string, AudioClip> soundDic;
     AudioSource[] sfxPlayer;
     AudioSource[] deadPlayer;
+
+    public static SoundManager Instance
+    {
+        get
+        {            
+            return instance;
+        }
+    }
     void Awake()
     {
         if(instance == null)
@@ -40,7 +48,7 @@ public class SoundManager : MonoBehaviour
         for(int index = 0; index < sfxPlayer.Length; index++)
         {
             sfxPlayer[index] = sfx.AddComponent<AudioSource>();
-            sfxPlayer[index].playOnAwake=false;
+            sfxPlayer[index].playOnAwake = false;
             sfxPlayer[index].volume = sfxVolume;
         }
 
@@ -52,7 +60,7 @@ public class SoundManager : MonoBehaviour
             deadPlayer[index] = dead.AddComponent<AudioSource>();
             deadPlayer[index].clip = sfxClips[0];
             deadPlayer[index].playOnAwake = false;
-            deadPlayer[index].volume = 0.1f;
+            deadPlayer[index].volume = 0.2f;
         }
 
         GameObject bgm = new("BGM");

@@ -28,6 +28,8 @@ public class Weapon : MonoBehaviour
 
         switch (id)
         {
+            case 0:
+                break;
             case 1:
                 animator.SetTrigger("onEnable");
                 break;
@@ -110,7 +112,7 @@ public class Weapon : MonoBehaviour
             rigid.velocity = Vector2.zero;
             col.enabled = false;
             animator.SetTrigger("Boom");
-            SoundManager.instance.PlaySfx("Boom");
+            SoundManager.Instance.PlaySfx("Boom");
         }
     }
 }

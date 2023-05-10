@@ -34,11 +34,14 @@ public class GameManager : MonoBehaviour
     public GameObject[] weaponList;
 
     readonly WaitForSeconds curseAlarm = new(5f);
+    readonly WaitForSeconds expUp = new(1);
 
     void Awake()
     {
         Instance= this;
         maxTime = 20f * 60f;
+        nextExp = new int[maxLevel];
+        nextExp[0] = 15;
         for(int i = 1; i<nextExp.Length; i++)
         {
             nextExp[i] = Mathf.FloorToInt((float)(nextExp[i-1] * 1.2));
@@ -47,13 +50,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(AutoExp());
-        SoundManager.instance.PlayBGM(0);
+        SoundManager.Instance.PlayBGM(0);
     }
     void Update()
     {
         if (isStop || isEnd)
             return;
-        gameTime += Time.deltaTime;
+        gameTime += Time.deltaTime;        
         if (curseIndex != curseTime.Length && gameTime >= curseTime[curseIndex])
         {
             StartCoroutine(CurseStrart());
@@ -68,6 +71,77 @@ public class GameManager : MonoBehaviour
                 //히든 엔딩인 보스전
             }
             StartCoroutine(GameEnd());
+        }
+    }
+    
+    public void GameOver()
+    {
+        StartCoroutine(GameOverRutine());
+    }
+    
+    public void GameRestart()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void GetExp(int gainExp)
+    {
+        exp += gainExp;
+
+        if (exp >= nextExp[level])
+        {
+            exp -= nextExp[level];
+            LevelUp();
+        }
+    }    
+    void LevelUp()
+    {        
+        isLevelUp = true;
+        level++;
+        SoundManager.Instance.PlaySfx("LevelUp");
+        levelPanels[0].GetComponent<Panel>().SetPanel();
+        levelPanels[1].GetComponent<Panel>().SetPanel();
+        if (level > 9)
+            levelPanels[2].GetComponent<Panel>().SetPanel();
+        Stop();
+
+    }
+    public void Stop()
+    {
+        isStop = true;
+        Time.timeScale = 0;
+    }
+    public void Resume()
+    {
+        isStop= false;
+        Time.timeScale = 1;
+    }
+    IEnumerator CurseStrart()
+    {
+        curseState.CurseAlarm();
+        yield return curseAlarm;
+        SoundManager.Instance.PlaySfx("Curse");
+        int switchCount = Random.Range(1, 3);
+        int caseNumber;
+        if (switchCount == 1)
+            caseNumber = Random.Range(0, 4);
+        else
+            caseNumber = Random.Range(0, 6);
+        player1.ChangeKey($"Curse{switchCount}{caseNumber}");
+        player2.ChangeKey($"Curse{switchCount}{caseNumber}");
+        yield return new WaitForSeconds(Random.Range(25f,55f));
+        curseState.EndAlarm();
+        yield return curseAlarm;
+        SoundManager.Instance.PlaySfx("EndCurse");
+        player1.ChangeKey("MainPlayer");
+        player2.ChangeKey("MainPlayer");
+        isCurse = false;
+    }    
+    IEnumerator AutoExp()
+    {
+        while (true)
+        {
+            yield return expUp;
+            GetExp(1);            
         }
     }
     IEnumerator GameEnd()//조건에 맞지 않으면 그냥 일반 엔딩연출
@@ -85,84 +159,29 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(8f);
         uiEnd[3].SetActive(true);
         yield return new WaitForSeconds(6f);
+        int[] weaponLevels = new int[weaponList.Length];
+        for(int index = 0; index < weaponList.Length; index++)
+        {
+            weaponLevels[index] = weaponList[index].GetComponent<WeaponManager>().level;
+        }
+        int[] player1Stats = new int[4];
+        int[] player2Stats = new int[4];
+        for(int index = 0; index < 4; index++)
+        {
+            player1Stats[index] = player1.statScore[index];
+            player2Stats[index] = player2.statScore[index];
+        }
+        DataManager.Instance.SetLevel(weaponLevels, player1Stats, player2Stats);
         SceneManager.LoadScene(2);
-    }
-    public void GameOver()
-    {
-        StartCoroutine(GameOverRutine());
-    }
+    }    
     IEnumerator GameOverRutine()
     {
         isStop = true;
 
         yield return new WaitForSeconds(0.5f);
 
-        SoundManager.instance.PlaySfx("Lose");
+        SoundManager.Instance.PlaySfx("Lose");
         uiEnd[0].SetActive(true);
         Stop();
-    }
-    public void GameRestart()
-    {
-        SceneManager.LoadScene(0);
-    }
-    public void GetExp(int gainExp)
-    {
-        exp += gainExp;
-
-        if (exp >= nextExp[level])
-        {
-            exp -= nextExp[level];
-            LevelUp();
-        }
-    }    
-    void LevelUp()
-    {
-        Stop();
-        isLevelUp = true;
-        level++;
-        SoundManager.instance.PlaySfx("LevelUp");
-        levelPanels[0].GetComponent<Panel>().SetPanel();
-        levelPanels[1].GetComponent<Panel>().SetPanel();
-        if (level > 9)
-            levelPanels[2].GetComponent<Panel>().SetPanel();
-    }
-    public void Stop()
-    {
-        isStop = true;
-        Time.timeScale = 0;
-    }
-    public void Resume()
-    {
-        isStop= false;
-        Time.timeScale = 1;
-    }
-    IEnumerator CurseStrart()
-    {
-        curseState.CurseAlarm();
-        yield return curseAlarm;
-        SoundManager.instance.PlaySfx("Curse");
-        int switchCount = Random.Range(1, 3);
-        int caseNumber;
-        if (switchCount == 1)
-            caseNumber = Random.Range(0, 4);
-        else
-            caseNumber = Random.Range(0, 6);
-        player1.ChangeKey($"Curse{switchCount}{caseNumber}");
-        player2.ChangeKey($"Curse{switchCount}{caseNumber}");
-        yield return new WaitForSeconds(Random.Range(25f,55f));
-        curseState.EndAlarm();
-        yield return curseAlarm;
-        SoundManager.instance.PlaySfx("EndCurse");
-        player1.ChangeKey("MainPlayer");
-        player2.ChangeKey("MainPlayer");
-        isCurse = false;
-    }
-    IEnumerator AutoExp()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1f);
-            GetExp(1);            
-        }
     }
 }
