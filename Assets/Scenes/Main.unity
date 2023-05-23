@@ -1041,6 +1041,7 @@ MonoBehaviour:
   uiPanel: {fileID: 411617532}
   resume: {fileID: 1309551813}
   skull: {fileID: 853505361}
+  CurseCount: {fileID: 0}
 --- !u!1 &202318555
 GameObject:
   m_ObjectHideFlags: 0
@@ -30334,7 +30335,6 @@ MonoBehaviour:
   enemyControl:
   - {fileID: 1574242542}
   - {fileID: 1704793118}
-  pool: {fileID: 1200592639}
   curseState: {fileID: 815291244}
   uiEnd:
   - {fileID: 1203213603}
@@ -40134,6 +40134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ff290bd10778747ab195096d929785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponLevels: 
+  player1StatLevels: 
+  player2StatLevels: 
 --- !u!4 &698915897
 Transform:
   m_ObjectHideFlags: 0
@@ -50194,6 +50197,7 @@ MonoBehaviour:
   - {fileID: 1875351850}
   - {fileID: 562669349}
   - {fileID: 1953201830}
+  isHidden: 0
   health: 0
   maxHealth: 100
   MoveSpeed: 3
@@ -72494,7 +72498,7 @@ MonoBehaviour:
     speed: 2
     exp: 4
   - spriteType: 3
-    spawnTime: 0.2
+    spawnTime: 0.1
     health: 100
     speed: 0.7
     exp: 5
@@ -72519,7 +72523,7 @@ MonoBehaviour:
     speed: 3
     exp: 600
   - spriteType: 8
-    spawnTime: 0.2
+    spawnTime: 0.1
     health: 1000
     speed: 2
     exp: 1000
@@ -72886,6 +72890,7 @@ MonoBehaviour:
   - {fileID: 144215466}
   - {fileID: 2091931804}
   - {fileID: 1656701382}
+  isHidden: 0
   health: 0
   maxHealth: 100
   MoveSpeed: 3

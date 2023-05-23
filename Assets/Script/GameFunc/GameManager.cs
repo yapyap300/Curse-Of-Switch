@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player player1;
     public Player player2;
-    public SpawnMob[] enemyControl;
-    public PoolsManager pool;
+    public SpawnMob[] enemyControl;    
     public Curse curseState;
     public GameObject[] uiEnd;
     [Header("# Player Level Info")]

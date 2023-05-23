@@ -47,22 +47,22 @@ public class EventSpawn : MonoBehaviour
     }
     IEnumerator SkullPattern()
     {
-        skulls[0] = GameManager.Instance.pool.Get(8).transform;
+        skulls[0] = PoolsManager.Instance.Get(8).transform;
         skulls[0].transform.position = transform.position + initialPosition[0];
         yield return moveDelay;
         skulls[0].DOMoveX(skulls[0].position.x + 13f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[0].gameObject.SetActive(false));
         yield return delay;
-        skulls[1] = GameManager.Instance.pool.Get(8).transform;
+        skulls[1] = PoolsManager.Instance.Get(8).transform;
         skulls[1].transform.position = transform.position + initialPosition[1];
         yield return moveDelay;
         skulls[1].DOMoveX(skulls[1].position.x - 13f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[1].gameObject.SetActive(false));
         yield return delay;
-        skulls[2] = GameManager.Instance.pool.Get(9).transform;
+        skulls[2] = PoolsManager.Instance.Get(9).transform;
         skulls[2].transform.position = transform.position + initialPosition[2];
         yield return moveDelay;
         skulls[2].DOMoveY(skulls[2].position.y - 14f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[2].gameObject.SetActive(false));
         yield return delay;
-        skulls[3] = GameManager.Instance.pool.Get(9).transform;
+        skulls[3] = PoolsManager.Instance.Get(9).transform;
         skulls[3].transform.position = transform.position + initialPosition[3];
         yield return moveDelay;
         skulls[3].DOMoveY(skulls[3].position.y + 14f, 1.5f).SetEase(Ease.Linear).OnComplete(() => skulls[3].gameObject.SetActive(false));
@@ -71,7 +71,7 @@ public class EventSpawn : MonoBehaviour
     {
         while (true)
         {
-            GameObject enemy = GameManager.Instance.pool.Get(0);
+            GameObject enemy = PoolsManager.Instance.Get(0);
             enemy.GetComponent<Enemy>().Init(spawnData, second);
             int ranPos = Random.Range(0, 4);
             if (ranPos == 0 || ranPos == 1)

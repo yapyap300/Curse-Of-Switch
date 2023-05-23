@@ -45,9 +45,7 @@ public class WeaponManager : MonoBehaviour
     }
     
     void Update()//첫번째 근거리 무기만 계속 일정하게 돌면되기때문에 여기서 동작
-    {
-        if (GameManager.Instance.isStop)
-            return;
+    {        
         if (id == 0)
             transform.Rotate(speed * Time.deltaTime * Vector3.back);
     }
@@ -213,6 +211,7 @@ public class WeaponManager : MonoBehaviour
                 speed -= level * 1f;
                 break;
         }
+        gameObject.SetActive(true);
     }
     public void PlusDamage()
     {
@@ -243,7 +242,7 @@ public class WeaponManager : MonoBehaviour
             }
             else
             {
-                weapon = GameManager.Instance.pool.Get(prefabId).transform;
+                weapon = PoolsManager.Instance.Get(prefabId).transform;
                 weapon.parent = transform;
             }            
             weapon.gameObject.SetActive(true);
@@ -277,12 +276,12 @@ public class WeaponManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(speed);
-            Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
+            Transform weapon = PoolsManager.Instance.Get(prefabId).transform;
             if (weapon.parent != transform)
                 weapon.parent = transform;
             weapon.localPosition = Vector3.zero;
             weapon.localRotation = Quaternion.identity;
-            Vector2 rotVec = GameManager.Instance.player1.InputVec;
+            Vector2 rotVec = player.InputVec;
             if (rotVec.magnitude == 0)
                 rotVec = Vector2.right;
             transform.rotation = Quaternion.LookRotation(Vector3.forward,rotVec);//무기 프리펩이아니라 프리펩의 부모인 관리오브젝트 자체가 돌아야함         
@@ -296,7 +295,7 @@ public class WeaponManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             for (int index = 0; index < count; index++)
             {
-                Transform weapon = GameManager.Instance.pool.Get(prefabId).transform;
+                Transform weapon = PoolsManager.Instance.Get(prefabId).transform;
                 weapon.SetPositionAndRotation(transform.position, Quaternion.identity);
                 Vector3 rotVec = new(0f,0f,Random.Range(-45f,45f));
                 weapon.Translate(weapon.up * 1.5f, Space.World);
@@ -320,7 +319,7 @@ public class WeaponManager : MonoBehaviour
                     Vector3 dir = targetPos - transform.position;
                     dir = dir.normalized;
 
-                    Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+                    Transform bullet = PoolsManager.Instance.Get(prefabId).transform;
 
                     bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
                     bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, count, dir, id);
@@ -340,7 +339,7 @@ public class WeaponManager : MonoBehaviour
             Vector3 dir = targetPos - transform.position;
             dir = dir.normalized;
 
-            Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+            Transform bullet = PoolsManager.Instance.Get(prefabId).transform;
 
             bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
             bullet.GetComponent<Weapon>().Init(damage + plusDamage * level, -1, targetPos, id);

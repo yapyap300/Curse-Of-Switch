@@ -42,7 +42,7 @@ public class Weapon : MonoBehaviour
                 break;
             case 4:
                 isTrack = true;
-                target = GameManager.Instance.player2.scanner.nearTarget.GetComponent<Rigidbody2D>();
+                target = scanner.nearTarget.GetComponent<Rigidbody2D>();
                 break;
             case 5:
                 col.enabled = true;
@@ -53,9 +53,6 @@ public class Weapon : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (GameManager.Instance.isStop)
-            return;
-        
         if (isTrack)
             Tracking();
         if (id == 5 && col.enabled == true)      

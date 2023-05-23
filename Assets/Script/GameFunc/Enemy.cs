@@ -119,12 +119,12 @@ public class Enemy : MonoBehaviour
     {       
         if (Random.Range(0, 1000) < 1)
         {
-            Transform potion = GameManager.Instance.pool.Get(7).transform;
+            Transform potion = PoolsManager.Instance.Get(7).transform;
             potion.position = transform.position;
         }
         if (Random.Range(0, 1000) < 1)
         {
-            Transform nuclear = GameManager.Instance.pool.Get(10).transform;
+            Transform nuclear = PoolsManager.Instance.Get(10).transform;
             nuclear.position = transform.position;
         }
         gameObject.SetActive(false);

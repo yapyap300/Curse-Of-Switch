@@ -9,7 +9,7 @@ public class Level_Info : MonoBehaviour
     [SerializeField] GameObject uiPanel;
     [SerializeField] Button resume;
     [SerializeField] Image skull;
-
+    [SerializeField] Text CurseCount;
     void Update()
     {
         if (!GameManager.Instance.isLevelUp && !GameManager.Instance.isCurse && Input.GetKeyDown(KeyCode.Escape)){
@@ -50,5 +50,6 @@ public class Level_Info : MonoBehaviour
         }
         float hitCount = GameManager.Instance.player1.hitCount + GameManager.Instance.player2.hitCount;
         skull.fillAmount = hitCount / 40;
+        CurseCount.text = $"{hitCount}";
     }
 }

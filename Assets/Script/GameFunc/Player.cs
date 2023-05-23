@@ -31,9 +31,7 @@ public class Player : MonoBehaviour
     } 
 
     void FixedUpdate()
-    {
-        if (GameManager.Instance.isStop)
-            return;
+    {        
         Vector2 NextVec = MoveSpeed * Time.fixedDeltaTime * InputVec;
         rigid.MovePosition(rigid.position + NextVec);
         rigid.velocity = Vector2.zero;
@@ -42,9 +40,11 @@ public class Player : MonoBehaviour
     {
         anim.SetFloat("Speed",InputVec.magnitude);
 
-        if (GameManager.Instance.isStop)
+             
+        if (!isHidden && GameManager.Instance.isStop)
             return;
-        if(InputVec.x != 0)
+        
+        if (InputVec.x != 0)
         {
             spriter.flipX= InputVec.x < 0;
         }
@@ -54,14 +54,13 @@ public class Player : MonoBehaviour
     //{
     //    health -= Time.deltaTime * (10 - armor);
 
-    //    if (GameManager.Instance.isCurse)
+    //    if (!isHidden && GameManager.Instance.isCurse)
     //        hitCount += Time.deltaTime;
     //    if (health < 0)
     //    {
     //        Dead();
     //    }
     //}
-
     public void Heal()
     {
         health = maxHealth;
@@ -129,20 +128,22 @@ public class Player : MonoBehaviour
         armor = statLevels[0] * 0.5f;
         MoveSpeed += statLevels[1] * 0.2f;
         maxHealth += statLevels[2] * 20;
+        health = maxHealth;
         for (int i = 0; i < myWeapon.Length; i++)            
             for (int index = 0; index < statLevels[3]; index++)
                 myWeapon[i].PlusDamage();
     }
     void Dead()
     {
-        for (int index = 2; index < transform.childCount; index++)
-        {
-            transform.GetChild(index).gameObject.SetActive(false);
-        }
         anim.SetTrigger("Dead");
-        if (!isHidden)
+        if (isHidden) HiddenManager.Instance.GameOver();
+        else {
+            for (int index = 2; index < transform.childCount; index++)
+            {
+                transform.GetChild(index).gameObject.SetActive(false);
+            }
+            
             GameManager.Instance.GameOver();
-        else
-            HiddenManager.Instance.GameOver();
+        }  
     }
 }

@@ -14,17 +14,16 @@ public class HiddenManager : MonoBehaviour
     
     void Start()
     {
+        instance = this;
         player1.isHidden = true;
         player2.isHidden = true;
         for(int index = 0; index < weaponList.Length; index++)
         {
             weaponList[index].Init(DataManager.Instance.weaponLevels[index]);
-        }
-        for (int index = 0; index < 4; index++)
-        {
-            player1.InitHiddenScene(DataManager.Instance.player1StatLevels);
-            player2.InitHiddenScene(DataManager.Instance.player2StatLevels);
-        }
+        }        
+        player1.InitHiddenScene(DataManager.Instance.player1StatLevels);
+        player2.InitHiddenScene(DataManager.Instance.player2StatLevels);
+        
     }
 
     public void GameOver()

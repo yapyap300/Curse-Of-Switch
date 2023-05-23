@@ -58,7 +58,7 @@ public class SpawnMob : MonoBehaviour
     {
         while (true)
         {
-            GameObject enemy = GameManager.Instance.pool.Get(0);
+            GameObject enemy = PoolsManager.Instance.Get(0);
             enemy.GetComponent<Enemy>().Init(spawnDatas[level],second);
             int ranPos = Random.Range(1, 5);
             if (ranPos == 1 || ranPos == 2)
