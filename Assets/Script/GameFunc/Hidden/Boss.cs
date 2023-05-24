@@ -6,7 +6,7 @@ public class Boss : MonoBehaviour
 {
     [Header("# Boss Info")]
     [SerializeField] int maxHelth;
-    [SerializeField] int helth;
+    public float health;
     [SerializeField] float speed;
     public int groggyCount;
     [Header("# Control Object")]
@@ -17,8 +17,7 @@ public class Boss : MonoBehaviour
 
     Collider2D col;
     Animator anim;
-    Rigidbody2D rigid;
-    SpriteRenderer spriter;
+    Rigidbody2D rigid;    
     int targetIndex;
     bool isPlay;
     Vector3 leftScale;
@@ -26,17 +25,17 @@ public class Boss : MonoBehaviour
     readonly Vector2 spellPos = new(0.3f, 2.2f);
     readonly WaitForFixedUpdate fix;
     readonly WaitForSeconds change = new(15f);
-    readonly WaitForSeconds attackDelay = new(0.5f);
+    readonly WaitForSeconds attackDelay = new(0.3f);
     readonly WaitForSeconds patternDelay = new(5f);
     void Awake()
     {
         leftScale = transform.localScale;
         rightScale = new(leftScale.x * -1, leftScale.y , leftScale.z);
-        col = GetComponent<Collider2D>();
-        spriter = GetComponent<SpriteRenderer>();
+        col = GetComponent<Collider2D>();        
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerDetect = GetComponentInChildren<Detect>();
+        health = maxHelth;
     }
     void Start()
     {
@@ -59,15 +58,15 @@ public class Boss : MonoBehaviour
         {
             anim.SetBool("Walk", false);
             StartCoroutine(CastSpell());
-        }
+        }        
     }
     void LateUpdate()
     {
         if (target[targetIndex].position.x > rigid.position.x)
             transform.localScale = rightScale;
-        else transform.localScale = leftScale;
-        
-    }
+        else transform.localScale = leftScale;        
+    }    
+    
     IEnumerator ChangeTarget()
     {
         targetIndex = Random.Range(0, 2);
@@ -125,16 +124,13 @@ public class Boss : MonoBehaviour
             Transform warning2 = PoolsManager.Instance.Get(7).transform;
             warning1.position = pos1;
             warning2.position = pos2;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
             warning1.gameObject.SetActive(false);
             warning2.gameObject.SetActive(false);
             Transform spell1 = PoolsManager.Instance.Get(6).transform;
             Transform spell2 = PoolsManager.Instance.Get(6).transform;
             spell1.position = pos1 + spellPos;
-            spell2.position = pos2 + spellPos;
-            yield return new WaitForSeconds(1.2f);
-            spell1.gameObject.SetActive(false);
-            spell2.gameObject.SetActive(false);
+            spell2.position = pos2 + spellPos;            
         }
         blackHole.SetActive(false);
         anim.SetBool("Groggy", true);

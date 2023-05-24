@@ -526,6 +526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323109440}
   - component: {fileID: 323109441}
+  - component: {fileID: 323109442}
   m_Layer: 6
   m_Name: HitPoint
   m_TagString: Untagged
@@ -564,6 +565,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.5, y: 1}
   m_Direction: 0
+--- !u!114 &323109442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323109439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa3b324e90606f4f8cdba8ca800fb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &396758874
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,7 +821,7 @@ GameObject:
   - component: {fileID: 755099400}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -917,8 +930,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHelth: 1000
-  helth: 0
-  speed: 3
+  health: 0
+  speed: 2.5
   groggyCount: 0
   hitPoint: {fileID: 323109439}
   target:
@@ -961,7 +974,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.5, y: 2}
+  m_Size: {x: 1, y: 2}
   m_Direction: 0
 --- !u!1 &797192295
 GameObject:
@@ -1817,6 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955171c7bf209f1429fb7140dc3d282d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: {fileID: 755099400}
   player1: {fileID: 1401043737}
   player2: {fileID: 280146586}
   weaponList:

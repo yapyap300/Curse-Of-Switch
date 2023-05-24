@@ -6,6 +6,7 @@ public class HiddenManager : MonoBehaviour
 {
     private static HiddenManager instance;
 
+    public Boss boss;
     public Player1 player1;
     public Player2 player2;
     public WeaponManager[] weaponList;
@@ -27,6 +28,10 @@ public class HiddenManager : MonoBehaviour
     }
 
     public void GameOver()
+    {
+
+    }
+    public void GameEnd()
     {
 
     }

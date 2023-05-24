@@ -11,4 +11,9 @@ public class BossDamage : MonoBehaviour
         else if(collision.CompareTag("Player2"))
             HiddenManager.Instance.player2.health -= 50;
     }
+
+    public void End()
+    {
+        gameObject.SetActive(false);
+    }
 }
