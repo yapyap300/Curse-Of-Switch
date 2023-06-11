@@ -50,6 +50,6 @@ public class Level_Info : MonoBehaviour
         }
         float hitCount = GameManager.Instance.player1.hitCount + GameManager.Instance.player2.hitCount;
         skull.fillAmount = hitCount / 40;
-        CurseCount.text = $"{hitCount}";
+        CurseCount.text = $"{hitCount:#}";
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     [Header("# Boss Info")]
-    [SerializeField] int maxHelth;
+    public int maxHelth;
     public float health;
     [SerializeField] float speed;
     public int groggyCount;
@@ -89,6 +89,7 @@ public class Boss : MonoBehaviour
         isPlay = true;
         yield return attackDelay;
         anim.SetTrigger("Attack");
+        SoundManager.Instance.PlaySfx("BossAttack");
         groggyCount++;
         yield return patternDelay;
         isPlay = false;
@@ -101,8 +102,10 @@ public class Boss : MonoBehaviour
         for(int index = 0; index < count; index++)
         {
             anim.SetTrigger("Teleport");
-            yield return new WaitForSeconds(3f);
+            SoundManager.Instance.PlaySfx("BossTeleport");
+            yield return new WaitForSeconds(2.3f);
             anim.SetTrigger("Attack");
+            SoundManager.Instance.PlaySfx("BossAttack");
             yield return new WaitForSeconds(0.5f);
         }
         groggyCount++;
@@ -130,7 +133,8 @@ public class Boss : MonoBehaviour
             Transform spell1 = PoolsManager.Instance.Get(6).transform;
             Transform spell2 = PoolsManager.Instance.Get(6).transform;
             spell1.position = pos1 + spellPos;
-            spell2.position = pos2 + spellPos;            
+            spell2.position = pos2 + spellPos;
+            SoundManager.Instance.PlaySfx("BossSpell");
         }
         blackHole.SetActive(false);
         anim.SetBool("Groggy", true);
@@ -145,8 +149,9 @@ public class Boss : MonoBehaviour
         isPlay = false;
         StartCoroutine(Move());
     }
+    
     void Teleport()//애니메이션에 이벤트로 사용할 함수
     {
-        rigid.position = new(Random.Range(-17f, 17f), Random.Range(-8f, 8f));
+        rigid.position = new(Random.Range(-17f, 17f), Random.Range(-10f, 10f));
     }
 }

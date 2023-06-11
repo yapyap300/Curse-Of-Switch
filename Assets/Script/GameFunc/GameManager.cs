@@ -69,7 +69,8 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(HiddenEnd());
                 //히든 엔딩인 보스전
             }
-            StartCoroutine(GameEnd());
+            else
+                StartCoroutine(GameEnd());
         }
     }
     
@@ -146,10 +147,13 @@ public class GameManager : MonoBehaviour
     IEnumerator GameEnd()//조건에 맞지 않으면 그냥 일반 엔딩연출
     {
         isEnd = true;
+        exp = 0;
+        StopCoroutine(AutoExp());
         uiEnd[1].SetActive(true);
         yield return curseAlarm;
         player1.EndingChangeState();
         player2.EndingChangeState();
+        
     }
     IEnumerator HiddenEnd()//히든 보스전에 들어갈때 할 연출
     {
@@ -176,7 +180,8 @@ public class GameManager : MonoBehaviour
     IEnumerator GameOverRutine()
     {
         isStop = true;
-
+        exp = 0;
+        StopCoroutine(AutoExp());
         yield return new WaitForSeconds(0.5f);
 
         SoundManager.Instance.PlaySfx("Lose");

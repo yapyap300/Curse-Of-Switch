@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -11,6 +12,7 @@ public class Weapon : MonoBehaviour
     Animator animator;
     Scanner scanner;//유도기능에 사용될 스크립트
     Rigidbody2D target;//유도무기에 사용될 타겟
+    int lifeTime;//히든씬에서 보스 그로기타임이 끝났을때 유도무기 찌꺼기가 남아서 추가함
     Vector3 targetPos;//폭발무기에 쓸 랜덤타겟위치
 
     void Awake()
@@ -41,8 +43,9 @@ public class Weapon : MonoBehaviour
                 rigid.velocity = dir * 10f;
                 break;
             case 4:
-                isTrack = true;
-                target = scanner.nearTarget.GetComponent<Rigidbody2D>();
+                isTrack = true;                
+                target = GetComponent<Rigidbody2D>();
+                StartCoroutine(LifeTime());
                 break;
             case 5:
                 col.enabled = true;
@@ -85,21 +88,33 @@ public class Weapon : MonoBehaviour
 
     void Tracking()//유도무기 전용
     {
-        if (scanner.nearTarget == null || target == null)//적이 죽는 처리가 OnTriggerEnter2D에서 일어나기때문에 중간에 타겟이 잡히지 않는 경우가 생겨서 오류를 막는 코드
+        if (lifeTime == 4)//4초동안 적이 스캐너에 잡히지 않으면 비활성화 메인스테이지는 적이 거의 계속 생성되기때문에 상관없을듯하다.
+        {
+            lifeTime = 0;
+            gameObject.SetActive(false);
+        }
+        if (scanner.nearTarget == null)//적이 죽는 처리가 OnTriggerEnter2D에서 일어나기때문에 중간에 타겟이 잡히지 않는 경우가 생겨서 오류를 막는 코드
             return;
 
         if (target != scanner.nearTarget.GetComponent<Rigidbody2D>())
         {
-            target = scanner.nearTarget.GetComponent<Rigidbody2D>();
-            return;
+            target = scanner.nearTarget.GetComponent<Rigidbody2D>();            
         }
-
+        lifeTime = 0;
         Vector2 dir = target.position - rigid.position;
         Vector2 nextVec = 10f * Time.fixedDeltaTime * dir.normalized;
         rigid.MovePosition(rigid.position + nextVec);
         rigid.velocity = Vector2.zero;
     }
 
+    IEnumerator LifeTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            lifeTime++;
+        }
+    }
     void End()//폭발무기 전용 폭발무기는 목표위치로만 이동해서 폭발 애니메이션을 발동시켜야됨
     {
         float distance = Vector3.Distance(transform.position, targetPos);

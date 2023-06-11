@@ -111,4 +111,8 @@ public class SoundManager : MonoBehaviour
         bgmPlayer.clip = bgmClip[index];
         bgmPlayer.Play();
     }
+    public void StopBGM()
+    {
+        bgmPlayer.Stop();
+    }
 }

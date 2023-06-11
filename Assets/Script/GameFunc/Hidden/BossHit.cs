@@ -8,7 +8,7 @@ public class BossHit : MonoBehaviour
     {
         if(!collision.CompareTag("Weapon")) return;
 
-        HiddenManager.Instance.boss.health -= collision.GetComponent<Weapon>().damage;
+        HiddenManager.Instance.boss.health -= collision.GetComponent<Weapon>().damage / 2f;
         if (HiddenManager.Instance.boss.health < 0)
             HiddenManager.Instance.GameEnd();
     }

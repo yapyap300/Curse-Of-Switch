@@ -49,18 +49,17 @@ public class Player : MonoBehaviour
             spriter.flipX= InputVec.x < 0;
         }
     }
+    void OnCollisionStay2D(Collision2D collision)
+    {        
+        health -= Time.deltaTime * (10 - armor);
 
-    //void OnCollisionStay2D(Collision2D collision)
-    //{
-    //    health -= Time.deltaTime * (10 - armor);
-
-    //    if (!isHidden && GameManager.Instance.isCurse)
-    //        hitCount += Time.deltaTime;
-    //    if (health < 0)
-    //    {
-    //        Dead();
-    //    }
-    //}
+        if (!isHidden && GameManager.Instance.isCurse)
+            hitCount += Time.deltaTime;
+        if (health < 0)
+        {
+            Dead();
+        }
+    }
     public void Heal()
     {
         health = maxHealth;
@@ -133,7 +132,7 @@ public class Player : MonoBehaviour
             for (int index = 0; index < statLevels[3]; index++)
                 myWeapon[i].PlusDamage();
     }
-    void Dead()
+    public void Dead()
     {
         anim.SetTrigger("Dead");
         if (isHidden) HiddenManager.Instance.GameOver();
@@ -142,7 +141,7 @@ public class Player : MonoBehaviour
             {
                 transform.GetChild(index).gameObject.SetActive(false);
             }
-            
+            SoundManager.Instance.StopBGM();
             GameManager.Instance.GameOver();
         }  
     }
