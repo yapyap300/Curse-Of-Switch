@@ -14,7 +14,7 @@ Unity 2D, C#
 
 ## 플레이 영상
 
-[YouTube]([https://youtu.be/N3ULJtdpXcs](https://youtu.be/twuFyRCC3iE))
+[YouTube](https://youtu.be/twuFyRCC3iE)
 
 ## 게임 플레이 화면
 
